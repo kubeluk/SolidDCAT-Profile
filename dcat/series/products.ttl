@@ -1,0 +1,16 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<#it>
+    a dcat:DatasetSeries, dcat:Dataset ;
+    dcterms:title "Set of products"@en ;
+    dcterms:description "A series containing all offerend product datasets."@en ;
+    dcat:seriesMember
+        <../ds/cola.ttl#it> ,
+        <../ds/soda.ttl#it> ;
+    dcat:distribution <#dist> .
+
+<#dist>
+    a dcat:Distribution ;
+    dcat:downloadURL <https://acme-company.solidcommunity.net/public/products/> ;
+    dcat:mediaType "text/turtle" .
