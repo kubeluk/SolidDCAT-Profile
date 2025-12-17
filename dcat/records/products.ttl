@@ -1,0 +1,17 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<#desc>
+    a dcat:CatalogRecord ;
+    dcterms:title "Description resource of products series"@en ;
+    dcterms:description "Metadata record describing the products dataset series."@en ;
+    foaf:primaryTopic <../series/products.ttl.meta> ;
+    dcterms:modified "2025-12-17T17:08:59.000Z"^^xsd:dateTime .
+
+<#wac>
+    a dcat:CatalogRecord ;
+    dcterms:title "Web Access Control resource of products series"@en ;
+    dcterms:description "Metadata record describing the Web Access Control resource for the products dataset series."@en ;
+    foaf:primaryTopic <../series/products.ttl.acl> ;
+    dcterms:modified "2025-12-17T17:08:59.000Z"^^xsd:dateTime .
