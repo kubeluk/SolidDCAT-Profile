@@ -4,6 +4,7 @@
 <#it>
     a dcat:Dataset ;
     dcterms:title "Cool Cola dataset"@en ;
+    dcat:inSeries <../series/products.ttl#it> ;
     dcat:distribution <#dist> .
 
 <#dist>
