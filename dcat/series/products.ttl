@@ -10,7 +10,10 @@
         <../ds/soda.ttl#it> ;
     dcat:distribution <#dist> .
 
-<#dist>
-    a dcat:Distribution ;
-    dcat:downloadURL <https://acme-company.solidcommunity.net/public/products/> ;
-    dcat:mediaType "text/turtle" .
+# <#dist>
+#     a dcat:Distribution ;
+#     dcat:downloadURL <https://acme-company.solidcommunity.net/public/products/> ;
+#     dcat:mediaType "text/turtle" .
+
+# Idea: The container resource per se is not a dcat:DatasetSeries!?
+# Our idea is that the ldp:BasicContainer only conceptually "spans" a dataset series via ldp:contains.
