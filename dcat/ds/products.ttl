@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<#it>
+    a dcat:Dataset ;
+    dcterms:title "Cool products dataset"@en ;
+    dcat:theme ldp:Container ;
+    dcat:distribution <#dist> .
+
+<#dist>
+    a dcat:Distribution ;
+    dcat:downloadURL <https://acme-company.solidcommunity.net/public/products/> ;
+    dcat:mediaType "text/turtle", "application/ld+json" .
