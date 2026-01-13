@@ -5,6 +5,7 @@
     a dcat:Dataset ;
     dcterms:title "Cool Soda dataset"@en ;
     dcat:inSeries <../series/products.ttl#it> ;
+    dcat:theme schema:Product ;
     dcat:distribution <#dist> .
 
 <#dist>
