@@ -1,0 +1,100 @@
+@prefix sdcat: <http://ex.org/sdcat#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+sdcat:CatalogShape
+    a sh:NodeShape ;
+    sh:targetClass dcat:Catalog ;
+    sh:property [
+        sh:path dcat:contactPoint ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path dcat:dataset ;
+        sh:xone (
+            [
+                sh:node sdcat:DatasetShape
+            ]
+            [
+                sh:node sdcat:DatasetSeriesShape
+            ]
+        )
+    ] .
+
+sdcat:DatasetShape
+    a sh:NodeShape ;
+    sh:targetClass dcat:Dataset ;
+    sh:property [
+        sh:path dcat:distribution ;
+        sh:node sdcat:DistributionShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+    sh:property [
+        sh:path dcat:theme ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path dcat:conformsTo ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path dcat:contactPoint ;
+        sh:nodeKind sh:IRI ;
+    ] .
+
+sdcat:DistributionShape
+    a sh:NodeShape ;
+    sh:targetClass dcat:Distribution ;
+    sh:property [
+        sh:path dcat:downloadURL ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+    sh:property [
+        sh:path dcat:mediaType ;
+        sh:xone (
+            [
+                sh:datatype xsd:string
+            ]
+            [
+                sh:nodeKind sh:IRI
+            ]
+        ) ;
+        sh:minCount 1
+    ] .
+
+sdcat:DatasetSeriesShape
+    a sh:NodeShape ;
+    sh:targetClass dcat:DatasetSeries ;
+    sh:property [
+        sh:path dcat:distribution ;
+        sh:node sdcat:DistributionShape
+    ] ;
+    sh:property [
+        sh:path dcat:theme ;
+        sh:nodeKind sh:IRI
+    ] ;
+    sh:property [
+        sh:path dcat:conformsTo ;
+        sh:nodeKind sh:IRI
+    ] ;
+    sh:property [
+        sh:path dcat:contactPoint ;
+        sh:nodeKind sh:IRI
+    ] ;
+    sh:property [
+        sh:path dcat:seriesMember ;
+        sh:xone (
+            [
+                sh:node sdcat:DatasetShape
+            ]
+            [
+                sh:node sdcat:DatasetSeriesShape
+            ]
+        ) ;
+        sh:minCount 1
+    ] .
