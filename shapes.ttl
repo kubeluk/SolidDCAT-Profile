@@ -1,6 +1,7 @@
 @prefix sdcat: <http://ex.org/sdcat#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 sdcat:CatalogShape
@@ -37,7 +38,7 @@ sdcat:DatasetShape
         sh:nodeKind sh:IRI ;
     ] ;
     sh:property [
-        sh:path dcat:conformsTo ;
+        sh:path dcterms:conformsTo ;
         sh:nodeKind sh:IRI ;
     ] ;
     sh:property [
@@ -79,7 +80,7 @@ sdcat:DatasetSeriesShape
         sh:nodeKind sh:IRI
     ] ;
     sh:property [
-        sh:path dcat:conformsTo ;
+        sh:path dcterms:conformsTo ;
         sh:nodeKind sh:IRI
     ] ;
     sh:property [
