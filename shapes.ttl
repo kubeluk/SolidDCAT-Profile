@@ -1,10 +1,10 @@
-@prefix sdcat: <http://ex.org/sdcat#> .
+@prefix sprof: <http://ex.org/profile/sprof#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-sdcat:CatalogShape
+sprof:CatalogShape
     a sh:NodeShape ;
     sh:targetClass dcat:Catalog ;
     sh:property [
@@ -13,23 +13,44 @@ sdcat:CatalogShape
         sh:minCount 1
     ] ;
     sh:property [
+        sh:path dcat:record ;
+        sh:node sprof:CatalogRecordShape .
+    ] ;
+    sh:property [
         sh:path dcat:dataset ;
         sh:xone (
             [
-                sh:node sdcat:DatasetShape
+                sh:node sprof:DatasetShape
             ]
             [
-                sh:node sdcat:DatasetSeriesShape
+                sh:node sprof:DatasetSeriesShape
             ]
         )
     ] .
 
-sdcat:DatasetShape
+sprof:CatalogRecordShape
+    a sh:NodeShape ;
+    sh:targetClass dcat:CatalogRecord ;
+    sh:property [
+        sh:path foaf:primaryTopic ;
+        sh:xor (
+            [
+                sh:node sprof:DatasetShape
+            ]
+            [
+                sh:node sprof:DatasetSeriesShape
+            ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] .
+
+sprof:DatasetShape
     a sh:NodeShape ;
     sh:targetClass dcat:Dataset ;
     sh:property [
         sh:path dcat:distribution ;
-        sh:node sdcat:DistributionShape ;
+        sh:node sprof:DistributionShape ;
         sh:minCount 1 ;
         sh:maxCount 1
     ] ;
@@ -46,7 +67,7 @@ sdcat:DatasetShape
         sh:nodeKind sh:IRI ;
     ] .
 
-sdcat:DistributionShape
+sprof:DistributionShape
     a sh:NodeShape ;
     sh:targetClass dcat:Distribution ;
     sh:property [
@@ -68,12 +89,13 @@ sdcat:DistributionShape
         sh:minCount 1
     ] .
 
-sdcat:DatasetSeriesShape
+sprof:DatasetSeriesShape
     a sh:NodeShape ;
     sh:targetClass dcat:DatasetSeries ;
     sh:property [
         sh:path dcat:distribution ;
-        sh:node sdcat:DistributionShape
+        sh:node sprof:DistributionShape ;
+        sh:minCount 1 .
     ] ;
     sh:property [
         sh:path dcat:theme ;
@@ -91,10 +113,10 @@ sdcat:DatasetSeriesShape
         sh:path dcat:seriesMember ;
         sh:xone (
             [
-                sh:node sdcat:DatasetShape
+                sh:node sprof:DatasetShape
             ]
             [
-                sh:node sdcat:DatasetSeriesShape
+                sh:node sprof:DatasetSeriesShape
             ]
         ) ;
         sh:minCount 1
