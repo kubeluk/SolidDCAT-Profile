@@ -58,14 +58,6 @@ sprof:DatasetShape
     sh:property [
         sh:path dcat:theme ;
         sh:nodeKind sh:IRI ;
-    ] ;
-    sh:property [
-        sh:path dcterms:conformsTo ;
-        sh:nodeKind sh:IRI ;
-    ] ;
-    sh:property [
-        sh:path dcat:contactPoint ;
-        sh:nodeKind sh:IRI ;
     ] .
 
 sprof:DistributionShape
@@ -88,6 +80,10 @@ sprof:DistributionShape
             ]
         ) ;
         sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path dcterms:conformsTo ;
+        sh:nodeKind sh:IRI ;
     ] .
 
 sprof:DatasetSeriesShape
@@ -100,14 +96,6 @@ sprof:DatasetSeriesShape
     ] ;
     sh:property [
         sh:path dcat:theme ;
-        sh:nodeKind sh:IRI
-    ] ;
-    sh:property [
-        sh:path dcterms:conformsTo ;
-        sh:nodeKind sh:IRI
-    ] ;
-    sh:property [
-        sh:path dcat:contactPoint ;
         sh:nodeKind sh:IRI
     ] ;
     sh:property [
