@@ -9,11 +9,6 @@ sprof:CatalogShape
     a sh:NodeShape ;
     sh:targetClass dcat:Catalog ;
     sh:property [
-        sh:path dcat:contactPoint ;
-        sh:nodeKind sh:IRI ;
-        sh:minCount 1
-    ] ;
-    sh:property [
         sh:path dcat:record ;
         sh:node sprof:CatalogRecordShape .
     ] ;
@@ -52,12 +47,11 @@ sprof:DatasetShape
     sh:property [
         sh:path dcat:distribution ;
         sh:node sprof:DistributionShape ;
-        sh:minCount 1 ;
-        sh:maxCount 1
     ] ;
     sh:property [
         sh:path dcat:theme ;
         sh:nodeKind sh:IRI ;
+        sh:minCount 1
     ] .
 
 sprof:DistributionShape
@@ -66,7 +60,6 @@ sprof:DistributionShape
     sh:property [
         sh:path dcat:downloadURL ;
         sh:nodeKind sh:IRI ;
-        sh:minCount 1 ;
         sh:maxCount 1
     ] ;
     sh:property [
@@ -92,11 +85,11 @@ sprof:DatasetSeriesShape
     sh:property [
         sh:path dcat:distribution ;
         sh:node sprof:DistributionShape ;
-        sh:minCount 1 .
     ] ;
     sh:property [
         sh:path dcat:theme ;
-        sh:nodeKind sh:IRI
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1
     ] ;
     sh:property [
         sh:path dcat:seriesMember ;
