@@ -6,26 +6,23 @@ This section defines the Solid DCAT Profile model. The profile describes resour
 
 ## Profile Model
 
-When a Solid resource is to be described by a dcat:Dataset then MUST exists a second Solid resource which is a dcat:CatalogRecord and that dataset MUST link to a dcat:Distribution, which itself links to the first Solid resource using dcat:downloadURL.
+> **_NOTE:_** Simply describe and show the shapes graph. Talk about which properties MUST be given. Talk about domains and ranges of properties. E.g.: "the `dcat:downloadURL`MUST link to a #SolidResource"
 
-(andersherum? data model vom catalog, data model vom record als datenmodellierungs kapitel und dann kapitel hosting catalog resource, beides beschrieben, wenn ein resource soll auf storage server gehostet werden damit access control verfügbar ist)
+> Catalog Document und Record document als Classes of Product
 
-Wenn ein record über solid resource zum katalog hinzugefügt werden soll dann müssen links existieren zwischen Dokumenten  
-When a Solid resource is recorded in a catalog then there MUST exists the three links between the documents
-
-Catalog Document und record document als Classes of Product, catalog besteht aus zwei arten von documents
-
-## Hosting Model
+## "Instantiating the Catalog Graph" / Managing the Catalog / Interaction Model
 
 A #DataCatalog is essentially a set of #CatalogRecord documents of type `dcat:CatalogRecord` that are referenced by a #DataCatalog of type `dcat:Catalog` via `dcat:record`. The Solid DCAT profile dictates #CatalogRecord documents to be managed by a #StorageServer:
-~~- A #DataCatalog document MUST be managed by a #StorageServer.~~
+- A #DataCatalog document MUST be managed by a #StorageServer.
 - A #CatalogRecord document MUST be managed by a #StorageServer.
 
 This implies:
-~~- A #DataCatalog document MUST be a Linked Data Platform RDF Source (LDP-RS).~~
+- A #DataCatalog document MUST be a Linked Data Platform RDF Source (LDP-RS).
 - A #CatalogRecord document MUST be a Linked Data Platform RDF Source (LDP-RS).
 
 > **_NOTE:_** It might only be relevant for catalog records to be managed by a storage server? I guess we do not need to make an assumption about the existence of a data catalog record?
+
+### Adding a resource to the catalog
 
 The following operations MUST be performed to record a #SolidResource in a #DataCatalog:
 1. A new #CatalogRecord document MUST be created on a #StorageServer.
@@ -41,7 +38,35 @@ The following operations MUST be performed to record a #SolidResource in a #Data
 
 > **_NOTE:_** Do we need to have a separate name for the #StorageServer that hosts the #DataCatalog documents, i.e. #CatalogDocument and #CatalogRecord? The idea is that a #DataCatalog is not necessarily hosted on the #StorageServer which contains #SolidResource resources that are recorded in the #DataCatalog. Likewise, a #DataCatalog might record #SolidResource resources that are hosted on #StorageServer instances which are different from the #StorageServer on which the #DataCatalog is hosted.
 
-### Example
+### Removing a resource from the catalog
+
+> HTTP DELETE on the catalog record + PATCH DELETE of record triple from catalog document
+
+### Updating a catalog record
+
+> link Solid + recommend HTTP PATCH on catalog resource
+
+### Discovery mechanisms
+
+A #DataCatalog serves as a common entry point for conducting discovery procedures. The #DataCatalog described in this document follows the Linked Data Principles and the RESTful architecture-style of the Web. It thus MAY be linked by another source. A source referencing a #DataCatalog MUST use the predicate `http://purl.org/sdp/terms#catalog`.
+
+> add sequence diagram from paper
+
+#### Discovering the catalog
+
+Without limiting generality, two modes of operation could be considered:
+1. A #DataCatalog MAY be discovered via the #StorageServer that hosts data recorded by the #DataCatalog by following the `http://purl.org/sdp/terms#catalog` links found in the #StorageServer's description resource.
+2. A #DataCatalog MAY be discovered via an agent's WebID document by following the `http://purl.org/sdp/terms#catalog` links that point to a #StorageServer hosting a #DataCatalog which curates datasets offered by the agent.
+
+#### Discovering catalog resources
+
+> "just follow the damn links..."
+
+### Controling access to a catalog record
+
+> link Solid / WAC + describe benefits aus paper
+
+## Example
 
 Assume the storage `<http://ex.org/s/>` on a #StorageServer that stores one container which contains one document:
 
@@ -144,11 +169,3 @@ The following example shows the state of all resources on the #StorageServer whe
 	a dcat:Distribution ;
 	dcat:downloadURL <../s/c/1> .
 ```
-
-## Discovery Model
-
-A #DataCatalog serves as a common entry point for conducting discovery procedures. The #DataCatalog described in this document follows the Linked Data Principles and the RESTful architecture-style of the Web. It thus MAY be linked by another source. A source referencing a #DataCatalog SHOULD use the predicate `http://purl.org/sdp/terms#catalog`.
-
-Without limiting generality, two modes of operation could be considered:
-1. A #DataCatalog MAY be discovered via the #StorageServer that hosts data recorded by the #DataCatalog by following the `http://purl.org/sdp/terms#catalog` links found in the #StorageServer's description resource.
-2. A #DataCatalog MAY be discovered via an agent's WebID document by following the `http://purl.org/sdp/terms#catalog` links that point to a #StorageServer hosting a #DataCatalog which curates datasets offered by the agent.
