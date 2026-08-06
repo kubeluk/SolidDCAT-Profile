@@ -1,6 +1,6 @@
 # Solid DCAT Profile
 
-The Solid Protocol provides mechanisms for managing data in an interoperable and access-controlled manner across decentralized storages, enabling spaces of loosely connected data sources. Solid-based dataspaces follow a bottom-up paradigm, which describes an environment of autonomous, heterogeneous data sources that coexist without prior global integration.
+The Solid Protocol provides mechanisms for managing data in an interoperable and access-controlled manner across decentralized storage servers , enabling spaces of loosely connected data sources. Solid-based dataspaces follow a bottom-up paradigm, which describes an environment of autonomous, heterogeneous data sources that coexist without prior global integration.
 
 In such an environment, discovery is consiered a fundamental mechanism for establishing relationships between participants' data sources in an incremental fashion. To foster sustainable exchange and reuse of information, i.e., to establish beneficial and meaningful connections between dataspace participants, descriptive *metadata* about the sources and their offered data products need to be captured and managed in a systematic, interoperable and standards-based manner. Ad-hoc or proprietary solutions undermine cross-participant interaction.
 
@@ -16,6 +16,8 @@ The Solid DCAT Profile offers a discovery mechanism for Solid-based dataspaces b
 
 ## Prefixes
 
+> **_TODO_**: Create PURL URI
+
 ```Turtle
 @prefix sprof: <http://ex.org/profile/sprof#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -27,13 +29,13 @@ The Solid DCAT Profile offers a discovery mechanism for Solid-based dataspaces b
 
 ## Profile Data Model
 
-The Data Catalog Vocabulary (DCAT) provides standardized RDF terms for describing data catalogs in flexible ways. In some domains or in the context of specific applications, it is necessary or required to be more explicit about a data model's intended usage. The Solid DCAT Profile does exactly that. It adopts many of DCAT's terms and adds constraints of how these terms MUST be used as part of the profile's data model. In the following, we specify these constraints as SHACL shapes.
+The Data Catalog Vocabulary (DCAT) provides standardized RDF terms for describing data catalogs in flexible ways. In some domains or in the context of specific applications, it is necessary or required to be more explicit about a data model's intended usage. The Solid DCAT Profile does exactly that. It adopts DCAT's data model in parts and states how Solid DCAT data catalogs are represented that augment Solid storages and curate their Solid-managed resources. In the following, we specify the added constraints on the data model as SHACL shapes.
 
 ### Catalog Shape
 
-A `dcat:Catalog` is a curated collection of metadata records describing some `dcat:Resource`. Our profile model defines the following requirements w.r.t. data catalogs:
-1. An instance of type `dcat:CatalogRecord` which MAY be linked by a `dcat:Catalog` via `dcat:record` MUST conform with the shape `sprof:CatalogRecordShape`.
-2. IRIs linked via `dcat:dataset` MUST conform to exactly one of the two shapes `sprof:DatasetShape` or `sprof:DatasetSeriesShape`.
+A `dcat:Catalog` is a curated collection of metadata records describing some `dcat:Resource`. Our profile data model defines the following requirements w.r.t. data catalogs:
+1. Resources linked via `dcat:record` MUST conform to the shape `sprof:CatalogRecordShape`.
+2. Resources linked via `dcat:dataset` MUST conform to exactly one of the two shapes `sprof:DatasetShape` or `sprof:DatasetSeriesShape`.
 
 ```Turtle
 sprof:CatalogShape
@@ -58,8 +60,8 @@ sprof:CatalogShape
 
 ### Catalog Record Shape
 
-A `dcat:CatalogRecord` is a document that contains metadata about `dcat:Resource` instances curated by the data catalog. Our profile model defines the following requirements w.r.t. catalog records:
-1. A `dcat:CatalogRecord` document MUST link the main thing that the document is about via `foaf:primaryTopic`.
+A `dcat:CatalogRecord` is a metadata document about `dcat:Resource` instances curated by a Solid DCAT data catalog. Our profile model defines the following requirements w.r.t. catalog records:
+1. A `dcat:CatalogRecord` document MUST link the resource that the document's metadata is about via `foaf:primaryTopic`.
 2. A catalog record's primary topic MUST conform to exactly one of the two shapes `sprof:DatasetShape` or `sprof:DatasetSeriesShape`.
 
 ```Turtle
@@ -83,9 +85,9 @@ sprof:CatalogRecordShape
 
 ### Dataset Shape
 
-A `dcat:Dataset` is a collection of data, that might come in one or more representations that make this conceptual notion of a dataset accessible. Our profile model defines the following requirements w.r.t. datasets:
-1. A `dcat:Dataset` MUST link an accessible form of representation via `dcat:Distribution` that conforms with the shape `sprof:DistributionShape`.
-2. A `dcat:Dataset` MUST link a blank node or an IRI via `dcat:theme` to state the dataset's main category.
+A `dcat:Dataset` is a collection of data, which comes in one or more representations that make the conceptual notion of a dataset accessible. Our profile model defines the following requirements w.r.t. datasets:
+1. A `dcat:Dataset` MUST link an accessible form of representation via `dcat:Distribution` that conforms to the shape `sprof:DistributionShape`.
+2. A `dcat:Dataset` MUST link a theme via `dcat:theme` to state the dataset's main category.
 
 ```Turtle
 sprof:DatasetShape
@@ -98,16 +100,15 @@ sprof:DatasetShape
     ] ;
 	sh:property [
         sh:path dcat:theme ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
         sh:minCount 1
     ] .
 ```
 
 ### Dataset Series Shape
 
-A `dcat:DatasetSeries` is a dataset that represents a collection of datasets that are published separately, but share some characteristics that group them. Our profile model defines the following requirements w.r.t. dataset series:
-1. As each instance of `dcat:DatasetSeries` is an instance of `dcat:Dataset`, a dataset series MUST conform with the shape `sprof:DatasetShape`.
-2. IRIs linked via `dcat:seriesMember` MUST conform to exactly one of the two shapes `sprof:DatasetShape` or `sprof:DatasetSeriesShape`.
+A `dcat:DatasetSeries` is a dataset which represents a collection of datasets that are published separately, but share some characteristics that group them. Our profile model defines the following requirements w.r.t. dataset series:
+1. As each instance of `dcat:DatasetSeries` is an instance of `dcat:Dataset`, a dataset series MUST conform to the shape `sprof:DatasetShape`.
+2. Resources linked  via `dcat:seriesMember` MUST conform to exactly one of the two shapes `sprof:DatasetShape` or `sprof:DatasetSeriesShape`.
 
 ```Turtle
 sprof:DatasetSeriesShape
@@ -130,9 +131,9 @@ sprof:DatasetSeriesShape
 ### Distribution Shape
 
 A `dcat:Distribution` is an accessible form of a dataset such as a downloadable file. Our profile model defines the following requirements w.r.t. distributions:
-1. A distribution MUST link at most one downloadable file via `dcat:downloadURL`.
-2. A distribution's media type MAY be linked via `dcat:mediaType` and MUST either be stated as a string or as an IRI.
-3. A distribution MAY indicate the model, schema, ontology, view or profile that this representation of a dataset conforms to via `dcterms:conformsTo` wich MUST be a SHACL shape or any other type of description given as blank node or IRI.
+1. A distribution MUST link one downloadable file via `dcat:downloadURL`.
+2. A distribution MUST link one media type via `dcat:mediaType`.
+3. A distribution MUST indicate at least one model, schema, ontology, view or profile that this representation of a dataset conforms to via `dcterms:conformsTo`.
 
 ```Turtle
 sprof:DistributionShape
@@ -141,34 +142,18 @@ sprof:DistributionShape
     sh:property [
         sh:path dcat:downloadURL ;
         sh:nodeKind sh:IRI ;
+		sh:minCount 1 ;
         sh:maxCount 1
     ] ;
     sh:property [
         sh:path dcat:mediaType ;
-        sh:xone (
-            [
-                sh:nodeKind sh:Literal ;
-				sh:datatype xsd:string
-            ]
-            [
-                sh:nodeKind sh:IRI
-            ]
-        ) ;
+		sh:minCount 1 ;
+        sh:maxCount 1
     ] ;
-	sh:or (
-		[
-			sh:property [
-				sh:path dcterms:conformsTo ;
-				sh:node shsh:NodeShapeShape
-			]
-		]
-		[
-			sh:property [
-				sh:path dcterms:conformsTo ;
-				sh:nodeKind sh:BlankNodeOrIRI ;
-			]
-		]
-	) .
+	sh:property [
+		sh:path dcterms:conformsTo ;
+		sh:minCount 1
+	] .
 ```
 
 ## Profile Catalog Management Model
