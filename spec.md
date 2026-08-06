@@ -7,7 +7,12 @@ In such an environment, discovery is consiered a fundamental mechanism for estab
 ## TL;DR
 
 The Solid DCAT Profile offers a discovery mechanism for Solid-based dataspaces by augmenting Solid's RESTful, resource-centric perspective with a dataset-centric, data catalog-style view based on the DCAT standard. By additionally understanding the data catalog itself as a collection of data which allows (1) the data catalog to be managed and interacted with via the Solid Protocol, and (2) the Solid-managed *data catalog* to be decoupled from the Solid-managed *cataloged data*, the Solid DCAT Profile provides the following benefits:
-1. 
+1. Standards-based metadata descriptions via DCAT terms.
+2. Follow-your-nose approach to data discovery, as further popularized by the Linked Data Principles.
+3. Solid's native authorization mechanism can be re-used for controlling access to individual catalog records allowing for granular privacy preservation.
+4. Possibility to independently manage the access control of the catalog itself and the source data described by the catalog.
+5. Possibility to individually select which source data to record in the data catalog. 
+6. Possibility to distribute a data catalog across multiple Solid storages, allowing for federated catalog deployments.
 
 ## Prefixes
 
