@@ -1,10 +1,13 @@
 # Solid DCAT Profile
 
-normative Mapping zwischen Solid/LDP-Ressourcen und DCAT-Ressourcen
+The Solid Protocol provides mechanisms for managing data in an interoperable and access-controlled manner across decentralized storages, enabling spaces of loosely connected data sources. Solid-based dataspaces follow a bottom-up paradigm, which describes an environment of autonomous, heterogeneous data sources that coexist without prior global integration.
 
-This section defines the Solid DCAT Profile model. The profile describes resources and container resources using DCAT concepts while keeping the DCAT metadata resources separate from the resources they describe. DCAT resources act as metadata proxies and do not change the type or semantics of the underlying Solid resources.
+In such an environment, discovery is consiered a fundamental mechanism for establishing relationships between participants' data sources in an incremental fashion. To foster sustainable exchange and reuse of information, i.e., to establish beneficial and meaningful connections between dataspace participants, descriptive *metadata* about the sources and their offered data products need to be captured and managed in a systematic, interoperable and standards-based manner. Ad-hoc or proprietary solutions undermine cross-participant interaction.
 
-> Catalog Document und Record document als Classes of Product
+## TL;DR
+
+The Solid DCAT Profile offers a discovery mechanism for Solid-based dataspaces by augmenting Solid's RESTful, resource-centric perspective with a dataset-centric, data catalog-style view based on the DCAT standard. By additionally understanding the data catalog itself as a collection of data which allows (1) the data catalog to be managed and interacted with via the Solid Protocol, and (2) the Solid-managed *data catalog* to be decoupled from the Solid-managed *cataloged data*, the Solid DCAT Profile provides the following benefits:
+1. 
 
 ## Prefixes
 
@@ -17,9 +20,7 @@ This section defines the Solid DCAT Profile model. The profile describes resour
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 ```
 
-## Profile Model
-
-> **_NOTE:_** Simply describe and show the shapes graph. Talk about which properties MUST be given. Talk about domains and ranges of properties. E.g.: "the `dcat:downloadURL` MUST link to a #SolidResource"
+## Profile Data Model
 
 The Data Catalog Vocabulary (DCAT) provides standardized RDF terms for describing data catalogs in flexible ways. In some domains or in the context of specific applications, it is necessary or required to be more explicit about a data model's intended usage. The Solid DCAT Profile does exactly that. It adopts many of DCAT's terms and adds constraints of how these terms MUST be used as part of the profile's data model. In the following, we specify these constraints as SHACL shapes.
 
@@ -124,7 +125,9 @@ sprof:DatasetSeriesShape
 ### Distribution Shape
 
 A `dcat:Distribution` is an accessible form of a dataset such as a downloadable file. Our profile model defines the following requirements w.r.t. distributions:
-1. 
+1. A distribution MUST link at most one downloadable file via `dcat:downloadURL`.
+2. A distribution's media type MAY be linked via `dcat:mediaType` and MUST either be stated as a string or as an IRI.
+3. A distribution MAY indicate the model, schema, ontology, view or profile that this representation of a dataset conforms to via `dcterms:conformsTo` wich MUST be a SHACL shape or any other type of description given as blank node or IRI.
 
 ```Turtle
 sprof:DistributionShape
@@ -139,13 +142,13 @@ sprof:DistributionShape
         sh:path dcat:mediaType ;
         sh:xone (
             [
-                sh:datatype xsd:string
+                sh:nodeKind sh:Literal ;
+				sh:datatype xsd:string
             ]
             [
                 sh:nodeKind sh:IRI
             ]
         ) ;
-        sh:minCount 1
     ] ;
 	sh:or (
 		[
@@ -163,22 +166,22 @@ sprof:DistributionShape
 	) .
 ```
 
-## "Instantiating the Catalog Graph" / Managing the Catalog / Interaction Model
+## Profile Catalog Management Model
 
-A #DataCatalog is essentially a set of #CatalogRecord documents of type `dcat:CatalogRecord` that are referenced by a #DataCatalog of type `dcat:Catalog` via `dcat:record`. The Solid DCAT profile dictates #CatalogRecord documents to be managed by a #StorageServer:
-- A #DataCatalog document MUST be managed by a #StorageServer.
-- A #CatalogRecord document MUST be managed by a #StorageServer.
+The profile's data model, introduced in the previous section, stated the shapes that define how Solid DCAT data catalogs are represented.
+The profile's catalog management model, introduced in this section, defines requirements and operations for Creating, Reading, Updating, and Deleting (CRUD) data catalogs and their managed resources.
+Data catalogs that follow this specification MAY curate any type of information resource
 
-This implies:
-- A #DataCatalog document MUST be a Linked Data Platform RDF Source (LDP-RS).
-- A #CatalogRecord document MUST be a Linked Data Platform RDF Source (LDP-RS).
+### Hosting a Solid DCAT Catalog
 
-> **_NOTE:_** It might only be relevant for catalog records to be managed by a storage server? I guess we do not need to make an assumption about the existence of a data catalog record?
+We define a Solid DCAT data catalog to be a collection of `dcat:CatalogRecord` documents that are referenced via `dcat:record` by a `dcat:Catalog` instance within a data catalog document. In the following, we view these two types of documents as managed by a #StorageServer: 
+- A data catalog document MUST be a Linked Data Platform RDF Source (LDP-RS) that is the representation of a RDF graph that conforms to the shape `sprof:CatalogShape`.
+- A catalog record document MUST be a Linked Data Platform RDF Source (LDP-RS) that is the representation of a RDF graph that conforms to the shape `sprof:CatalogRecordShape`.
 
-### Adding a resource to the catalog
+### Adding a Resource to the Catalog
 
-The following operations MUST be performed to record a #SolidResource in a #DataCatalog:
-1. A new #CatalogRecord document MUST be created on a #StorageServer.
+To record a new resource in the catalog:
+1. A new document of type `dcat:CatalogRecord` MUST be created on a #StorageServer.
 2. A new triple MUST be added to the #DataCatalog document that links the #DataCatalog and the #CatalogRecord via `dcat:record`.
 3. A new #Dataset (instance of type `dcat:Dataset`) MUST be created as a secondary resource by referencing the primary #CatalogRecord resource and an additional fragment identifier component.
 4. IF the #SolidResource is of type `ldp:Container`, THEN the secondary #Dataset resource MUST further be of type `dcat:DatasetSeries`.
@@ -188,8 +191,6 @@ The following operations MUST be performed to record a #SolidResource in a #Data
 8. The #Distribution resource MUST link the #SolidResource via `dcat:downloadURL`.
 9. IF the #SolidResource is part of a containment triple (`ldp:contains`) in _object position_ AND the resource in subject position is in the set of the recorded resources in the #DataCatalog, THEN the #Dataset resource describing the #SolidResource MUST link the #Dataset resource describing the resource which is _above_ the #SolidResource in the containment hierarchy via `dcat:inSeries`.
 10. IF the #SolidResource is part of a containment triple (`ldp:contains`) in _subject position_ AND the resource in object position is in the set of the recorded resources in the #DataCatalog, THEN the #Dataset resource describing the #SolidResource MUST link the #Dataset resource describing the resource which is _below_ the #SolidResource in the containment hierarchy via `dcat:hasMember`.
-
-> **_NOTE:_** Do we need to have a separate name for the #StorageServer that hosts the #DataCatalog documents, i.e. #CatalogDocument and #CatalogRecord? The idea is that a #DataCatalog is not necessarily hosted on the #StorageServer which contains #SolidResource resources that are recorded in the #DataCatalog. Likewise, a #DataCatalog might record #SolidResource resources that are hosted on #StorageServer instances which are different from the #StorageServer on which the #DataCatalog is hosted.
 
 ### Removing a resource from the catalog
 
@@ -203,7 +204,7 @@ The following operations MUST be performed to record a #SolidResource in a #Data
 
 A #DataCatalog serves as a common entry point for conducting discovery procedures. The #DataCatalog described in this document follows the Linked Data Principles and the RESTful architecture-style of the Web. It thus MAY be linked by another source. A source referencing a #DataCatalog MUST use the predicate `http://purl.org/sdp/terms#catalog`.
 
-> add sequence diagram from paper
+> **_TODO_**: add sequence diagram from paper
 
 #### Discovering the catalog
 
