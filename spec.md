@@ -16,10 +16,8 @@ The Solid DCAT Profile offers a discovery mechanism for Solid-based dataspaces b
 
 ## Prefixes
 
-> **_TODO_**: Create PURL URI
-
 ```Turtle
-@prefix sprof: <http://ex.org/profile/sprof#> .
+@prefix sdp: <http://purl.org/sdp/terms#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
@@ -34,25 +32,25 @@ The Data Catalog Vocabulary (DCAT) provides standardized RDF terms for describin
 ### Catalog Shape
 
 A `dcat:Catalog` is a curated collection of metadata records describing some `dcat:Resource`. Our profile data model defines the following requirements w.r.t. data catalogs:
-1. Resources linked via `dcat:record` MUST conform to the shape `sprof:CatalogRecordShape`.
-2. Resources linked via `dcat:dataset` MUST conform to exactly one of the two shapes `sprof:DatasetShape` or `sprof:DatasetSeriesShape`.
+1. Resources linked via `dcat:record` MUST conform to the shape `sdp:CatalogRecordShape`.
+2. Resources linked via `dcat:dataset` MUST conform to exactly one of the two shapes `sdp:DatasetShape` or `sdp:DatasetSeriesShape`.
 
 ```Turtle
-sprof:CatalogShape
+sdp:CatalogShape
     a sh:NodeShape ;
     sh:targetClass dcat:Catalog ;
     sh:property [
         sh:path dcat:record ;
-        sh:node sprof:CatalogRecordShape .
+        sh:node sdp:CatalogRecordShape .
     ] ;
     sh:property [
         sh:path dcat:dataset ;
         sh:xone (
             [
-                sh:node sprof:DatasetShape
+                sh:node sdp:DatasetShape
             ]
             [
-                sh:node sprof:DatasetSeriesShape
+                sh:node sdp:DatasetSeriesShape
             ]
         )
     ] .
@@ -62,20 +60,20 @@ sprof:CatalogShape
 
 A `dcat:CatalogRecord` is a metadata document about `dcat:Resource` instances curated by a Solid DCAT data catalog. Our profile model defines the following requirements w.r.t. catalog records:
 1. A `dcat:CatalogRecord` document MUST link the resource that the document's metadata is about via `foaf:primaryTopic`.
-2. A catalog record's primary topic MUST conform to exactly one of the two shapes `sprof:DatasetShape` or `sprof:DatasetSeriesShape`.
+2. A catalog record's primary topic MUST conform to exactly one of the two shapes `sdp:DatasetShape` or `sdp:DatasetSeriesShape`.
 
 ```Turtle
-sprof:CatalogRecordShape
+sdp:CatalogRecordShape
     a sh:NodeShape ;
     sh:targetClass dcat:CatalogRecord ;
     sh:property [
         sh:path foaf:primaryTopic ;
         sh:xone (
             [
-                sh:node sprof:DatasetShape
+                sh:node sdp:DatasetShape
             ]
             [
-                sh:node sprof:DatasetSeriesShape
+                sh:node sdp:DatasetSeriesShape
             ]
         ) ;
         sh:minCount 1 ;
@@ -86,17 +84,17 @@ sprof:CatalogRecordShape
 ### Dataset Shape
 
 A `dcat:Dataset` is a collection of data, which comes in one or more representations that make the conceptual notion of a dataset accessible. Our profile model defines the following requirements w.r.t. datasets:
-1. A `dcat:Dataset` MUST link an accessible form of representation via `dcat:Distribution` that conforms to the shape `sprof:DistributionShape`.
+1. A `dcat:Dataset` MUST link an accessible form of representation via `dcat:Distribution` that conforms to the shape `sdp:DistributionShape`.
 2. A `dcat:Dataset` MUST link a theme via `dcat:theme` to state the dataset's main category.
-3. Resources linked via `dcat:inSeries` MUST conform to the shape `sprof:DatasetSeriesShape`.
+3. Resources linked via `dcat:inSeries` MUST conform to the shape `sdp:DatasetSeriesShape`.
 
 ```Turtle
-sprof:DatasetShape
+sdp:DatasetShape
     a sh:NodeShape ;
     sh:targetClass dcat:Dataset ;
     sh:property [
         sh:path dcat:distribution ;
-        sh:node sprof:DistributionShape ;
+        sh:node sdp:DistributionShape ;
 		sh:minCount 1
     ] ;
 	sh:property [
@@ -105,29 +103,29 @@ sprof:DatasetShape
     ] ;
 	sh:property [
 		sh:path dcat:inSeries ;
-		sh:node sprof:DatasetSeriesShape
+		sh:node sdp:DatasetSeriesShape
 	] .
 ```
 
 ### Dataset Series Shape
 
 A `dcat:DatasetSeries` is a dataset which represents a collection of datasets that are published separately, but share some characteristics that group them. Our profile model defines the following requirements w.r.t. dataset series:
-1. As each instance of `dcat:DatasetSeries` is an instance of `dcat:Dataset`, a dataset series MUST conform to the shape `sprof:DatasetShape`.
-2. Resources linked  via `dcat:seriesMember` MUST conform to exactly one of the two shapes `sprof:DatasetShape` or `sprof:DatasetSeriesShape`.
+1. As each instance of `dcat:DatasetSeries` is an instance of `dcat:Dataset`, a dataset series MUST conform to the shape `sdp:DatasetShape`.
+2. Resources linked  via `dcat:seriesMember` MUST conform to exactly one of the two shapes `sdp:DatasetShape` or `sdp:DatasetSeriesShape`.
 
 ```Turtle
-sprof:DatasetSeriesShape
+sdp:DatasetSeriesShape
     a sh:NodeShape ;
     sh:targetClass dcat:DatasetSeries ;
-    sh:node sprof:DatasetShape ;
+    sh:node sdp:DatasetShape ;
     sh:property [
         sh:path dcat:seriesMember ;
         sh:xone (
             [
-                sh:node sprof:DatasetShape
+                sh:node sdp:DatasetShape
             ]
             [
-                sh:node sprof:DatasetSeriesShape
+                sh:node sdp:DatasetSeriesShape
             ]
         ) ;
     ] .
@@ -141,7 +139,7 @@ A `dcat:Distribution` is an accessible form of a dataset such as a downloadable 
 3. A distribution MUST indicate at least one model, schema, ontology, view or profile that this representation of a dataset conforms to via `dcterms:conformsTo`.
 
 ```Turtle
-sprof:DistributionShape
+sdp:DistributionShape
     a sh:NodeShape ;
     sh:targetClass dcat:Distribution ;
     sh:property [
@@ -170,9 +168,9 @@ The profile's catalog management model, introduced in this section, defines the 
 
 A Solid DCAT data catalog is a collection of two types of documents: (1) One root catalog document, and (2) several catalog record documents.
 
-A root catalog document MUST conform to the shape `sprof:CatalogShape`.
+A root catalog document MUST conform to the shape `sdp:CatalogShape`.
 
-A catalog record document MUST conform to the shape `sprof:CatalogRecordShape`.
+A catalog record document MUST conform to the shape `sdp:CatalogRecordShape`.
 
 These two types of documents are Solid-managed information resources:
 - The behaviour of a data catalog root document MUST corresponds to a Linked Data Platform RDF Source (LDP-RS).
@@ -184,7 +182,7 @@ The root data catalog document and all its referenced catalog record documents M
 
 There is a 1-1 correspondence between Solid DCAT catalog record documents and information resources managed by a Solid storage server.
 
-A Solid-managed resource that was added to a Solid DCAT data catalog MUST be augmented by exactly one catalog record that conforms to the shape `sprof:CatalogRecordShape`.
+A Solid-managed resource that was added to a Solid DCAT data catalog MUST be augmented by exactly one catalog record that conforms to the shape `sdp:CatalogRecordShape`.
 
 Clients can add a new Solid-managed resource to a Solid DCAT data catalog by performing the following operations:
 
@@ -232,27 +230,29 @@ Solid DCAT catalog resources MAY be modified using N3 patches as defined in the 
 
 ### Discovery mechanisms
 
-A Solid DCAT data catalog serves as a common entry point for conducting discovery procedures. The Solid DCAT Profile follows the Linked Data Principles and the RESTful architecture-style of the Web.
-
-A Solid DCAT data catalog MAY be referenced by another resource.
+The Solid DCAT Profile follows the Linked Data Principles and the RESTful architecture-style of the Web. A Solid DCAT data catalog serves as a common entry point for conducting discovery procedures and thus MAY be referenced by other resources.
 
 A resource referencing a Solid DCAT data catalog MUST use the predicate `http://purl.org/sdp/terms#catalog`.
 
-> **_TODO_**: add sequence diagram from paper
-
 #### Discovering the catalog
 
-Without limiting generality, two modes of operation could be considered:
-1. A #DataCatalog MAY be discovered via the #StorageServer that hosts data recorded by the #DataCatalog by following the `http://purl.org/sdp/terms#catalog` links found in the #StorageServer's description resource.
-2. A #DataCatalog MAY be discovered via an agent's WebID document by following the `http://purl.org/sdp/terms#catalog` links that point to a #StorageServer hosting a #DataCatalog which curates datasets offered by the agent.
+A Solid DCAT data catalog MAY be discovered via a the `sdp:catalog` predicate:
+1. A Solid DCAT data catalog MAY be discovered via the Solid storage server that hosts data recorded by the catalog by following a `sdp:catalog` link found in the server's description resource (cf. Solid Protocol §4.3.2).
+2. A Solid DCAT data catalog MAY be discovered via an agent's WebID document by following a `sdp:catalog` link that points to a Solid storage server hosting a catalog which curates datasets offered by the agent.
 
 #### Discovering catalog resources
 
-> "just follow the damn links..."
+After discovering the catalog itself, the process of discovering datasets is composed of interacting with the resources defined in the profile's data model.
+
+A client MAY follow a `dcat:record` link to discover a catalog record containing metadata information about a Solid-managed resource.
+
+A client MAY follow a `dcat:dataset` link to directly discover the dataset augmenting a Solid-managed resource.
+
+> **_TODO_**: add sequence diagram from paper
 
 ### Controling access to a catalog record
 
-> link Solid / WAC
+A client SHOULD make use of Web Access Control (WAC) to restrict access to catalog documents (cf. Solid Protocol §11)
 
 ## Example
 
