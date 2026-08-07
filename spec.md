@@ -88,6 +88,7 @@ sprof:CatalogRecordShape
 A `dcat:Dataset` is a collection of data, which comes in one or more representations that make the conceptual notion of a dataset accessible. Our profile model defines the following requirements w.r.t. datasets:
 1. A `dcat:Dataset` MUST link an accessible form of representation via `dcat:Distribution` that conforms to the shape `sprof:DistributionShape`.
 2. A `dcat:Dataset` MUST link a theme via `dcat:theme` to state the dataset's main category.
+3. Resources linked via `dcat:inSeries` MUST conform to the shape `sprof:DatasetSeriesShape`.
 
 ```Turtle
 sprof:DatasetShape
@@ -101,7 +102,11 @@ sprof:DatasetShape
 	sh:property [
         sh:path dcat:theme ;
         sh:minCount 1
-    ] .
+    ] ;
+	sh:property [
+		sh:path dcat:inSeries ;
+		sh:node sprof:DatasetSeriesShape
+	] .
 ```
 
 ### Dataset Series Shape
@@ -159,40 +164,79 @@ sprof:DistributionShape
 ## Profile Catalog Management Model
 
 The profile's data model, introduced in the previous section, stated the shapes that define how Solid DCAT data catalogs are represented.
-The profile's catalog management model, introduced in this section, defines requirements and operations for Creating, Reading, Updating, and Deleting (CRUD) data catalogs and their managed resources.
-Data catalogs that follow this specification MAY curate any type of information resource
+The profile's catalog management model, introduced in this section, defines the catalog's bahaviour and how cataloged resources are managed.
 
 ### Hosting a Solid DCAT Catalog
 
-We define a Solid DCAT data catalog to be a collection of `dcat:CatalogRecord` documents that are referenced via `dcat:record` by a `dcat:Catalog` instance within a data catalog document. In the following, we view these two types of documents as managed by a #StorageServer: 
-- A data catalog document MUST be a Linked Data Platform RDF Source (LDP-RS) that is the representation of a RDF graph that conforms to the shape `sprof:CatalogShape`.
-- A catalog record document MUST be a Linked Data Platform RDF Source (LDP-RS) that is the representation of a RDF graph that conforms to the shape `sprof:CatalogRecordShape`.
+A Solid DCAT data catalog is a collection of two types of documents: (1) One root catalog document, and (2) several catalog record documents.
 
-### Adding a Resource to the Catalog
+A root catalog document MUST conform to the shape `sprof:CatalogShape`.
 
-To record a new resource in the catalog:
-1. A new document of type `dcat:CatalogRecord` MUST be created on a #StorageServer.
-2. A new triple MUST be added to the #DataCatalog document that links the #DataCatalog and the #CatalogRecord via `dcat:record`.
-3. A new #Dataset (instance of type `dcat:Dataset`) MUST be created as a secondary resource by referencing the primary #CatalogRecord resource and an additional fragment identifier component.
-4. IF the #SolidResource is of type `ldp:Container`, THEN the secondary #Dataset resource MUST further be of type `dcat:DatasetSeries`.
-5. The #CatalogRecord MUST link the secondary #Dataset resource via `foaf:primaryTopic`.
-6. A new #Distribution (instance of type `dcat:Distribution`) MUST be created as a secondary resource by referencing the primary #CatalogRecord and an additional fragment identifier component.
-7. The #Dataset resource MUST link the #Distribution resource via `dcat:distribution`.
-8. The #Distribution resource MUST link the #SolidResource via `dcat:downloadURL`.
-9. IF the #SolidResource is part of a containment triple (`ldp:contains`) in _object position_ AND the resource in subject position is in the set of the recorded resources in the #DataCatalog, THEN the #Dataset resource describing the #SolidResource MUST link the #Dataset resource describing the resource which is _above_ the #SolidResource in the containment hierarchy via `dcat:inSeries`.
-10. IF the #SolidResource is part of a containment triple (`ldp:contains`) in _subject position_ AND the resource in object position is in the set of the recorded resources in the #DataCatalog, THEN the #Dataset resource describing the #SolidResource MUST link the #Dataset resource describing the resource which is _below_ the #SolidResource in the containment hierarchy via `dcat:hasMember`.
+A catalog record document MUST conform to the shape `sprof:CatalogRecordShape`.
 
-### Removing a resource from the catalog
+These two types of documents are Solid-managed information resources:
+- The behaviour of a data catalog root document MUST corresponds to a Linked Data Platform RDF Source (LDP-RS).
+- The behaviour of a catalog record document MUST correspond to a Linked Data Platform RDF Source (LDP-RS).
 
-> HTTP DELETE on the catalog record + PATCH DELETE of record triple from catalog document
+The root data catalog document and all its referenced catalog record documents MAY be managed by the same Solid storage server. Nevertheless, federated deployment scanarios are also possible, where the documents are distributed across various Solid storage servers.
 
-### Updating a catalog record
+### Adding a Resource to a Catalog
 
-> link Solid + recommend HTTP PATCH on catalog resource
+There is a 1-1 correspondence between Solid DCAT catalog record documents and information resources managed by a Solid storage server.
+
+A Solid-managed resource that was added to a Solid DCAT data catalog MUST be augmented by exactly one catalog record that conforms to the shape `sprof:CatalogRecordShape`.
+
+Clients can add a new Solid-managed resource to a Solid DCAT data catalog by performing the following operations:
+
+1. Creating a corresponding catalog record:
+
+A catalog record MUST be created on a Solid storage server.
+
+When the resource is a `ldp:Container` an instance of type `dcat:DatasetSeries` MUST be created as a secondary resource by referencing the primary catalog record resource and an additional fragment identifier component. The catalog record MUST reference the dataset series via `foaf:primaryTopic`.
+
+When the resource is *not* a `ldp:Container` an instance of type `dcat:Dataset` MUST be created as a secondary resource by referencing the primary catalog record resource and an additional fragment identifier component. The catalog record MUST reference the dataset via `foaf:primaryTopic`.
+
+The fragment identifier component for a dataset / dataset series MAY be `#ds`.
+
+An instance of type `dcat:Distribution` MUST be created as a secondary resource by referencing the primary catalog record resource and an additional fragment identifier component.
+
+The fragement identifier component for a distribution MAY be `#dist`.
+
+The created dataset / dataset series MUST link the created distribution via `dcat:distribution`.
+
+The created distribution MUST link the Solid-managed resource via `dcat:downloadURL`.
+
+> What about `dcat:inSeries` and `dcat:hasMember`?
+> IF the #SolidResource is part of a containment triple (`ldp:contains`) in _object position_ AND the resource in subject position is in the set of the recorded resources in the #DataCatalog, THEN the #Dataset resource describing the #SolidResource MUST link the #Dataset resource describing the resource which is _above_ the #SolidResource in the containment hierarchy via `dcat:inSeries`.
+> IF the #SolidResource is part of a containment triple (`ldp:contains`) in _subject position_ AND the resource in object position is in the set of the recorded resources in the #DataCatalog, THEN the #Dataset resource describing the #SolidResource MUST link the #Dataset resource describing the resource which is _below_ the #SolidResource in the containment hierarchy via `dcat:hasMember`.
+
+2. Linking the new catalog record
+
+The new catalog record MUST be linked by the root catalog document via `dcat:record`.
+
+A client MAY perform step 1 by a HTTP `POST` request to a URI path ending with `/` as defined in the Solid Protocol (§5.3).
+
+A client MAY perform step 2 by a HTTP `PATCH` request to the root catalog document as defined in the Solid Protocol (§5.3.1).
+
+### Reading a Catalog Resource
+
+Clients retrieve a representation of a resource's state using HTTP `GET`, `HEAD` and `OPTIONS`, as defined in the Solid Protocol (§5.2).
+
+### Updating a Catalog Resource
+
+Solid DCAT catalog resources MAY be modified using N3 patches as defined in the Solid Protocol (§5.3.1).
+
+### Removing a Catalog Resource
+
+> (optional) PATCH DELETE of dcat:hasMember triple when dcat:inSeries triple is present in corresponding catalog record + HTTP DELETE on the catalog record + PATCH DELETE of record triple from catalog document
 
 ### Discovery mechanisms
 
-A #DataCatalog serves as a common entry point for conducting discovery procedures. The #DataCatalog described in this document follows the Linked Data Principles and the RESTful architecture-style of the Web. It thus MAY be linked by another source. A source referencing a #DataCatalog MUST use the predicate `http://purl.org/sdp/terms#catalog`.
+A Solid DCAT data catalog serves as a common entry point for conducting discovery procedures. The Solid DCAT Profile follows the Linked Data Principles and the RESTful architecture-style of the Web.
+
+A Solid DCAT data catalog MAY be referenced by another resource.
+
+A resource referencing a Solid DCAT data catalog MUST use the predicate `http://purl.org/sdp/terms#catalog`.
 
 > **_TODO_**: add sequence diagram from paper
 
@@ -208,7 +252,7 @@ Without limiting generality, two modes of operation could be considered:
 
 ### Controling access to a catalog record
 
-> link Solid / WAC + describe benefits aus paper
+> link Solid / WAC
 
 ## Example
 
