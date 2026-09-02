@@ -32,7 +32,7 @@ This section describes the shapes that define how Solid DCAT data catalogs are r
 
 ### Catalog
 
-A `dcat:Catalog` is a curated collection of metadata records describing some `dcat:Resource`. Our profile data model defines the following requirements w.r.t. data catalogs:
+A `dcat:Catalog` is a collection of metadata records describing some `dcat:Resource`. Our profile data model defines the following requirements w.r.t. data catalogs:
 1. Resources linked via `dcat:record` MUST conform to the shape `sdp:CatalogRecordShape`.
 2. Resources linked via `dcat:dataset` MUST conform to exactly one of the two shapes `sdp:DatasetShape` or `sdp:DatasetSeriesShape`.
 
