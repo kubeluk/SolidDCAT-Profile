@@ -194,18 +194,13 @@ When the resource is a `ldp:Container` an instance of type `dcat:DatasetSeries` 
 
 When the resource is *not* a `ldp:Container` an instance of type `dcat:Dataset` MUST be created as a secondary resource by referencing the primary catalog record resource and an additional fragment identifier component. The catalog record MUST reference the dataset via `foaf:primaryTopic`.
 
-The fragment identifier component for a dataset / dataset series MAY be `#ds`.
-
 An instance of type `dcat:Distribution` MUST be created as a secondary resource by referencing the primary catalog record resource and an additional fragment identifier component.
 
-
-The created dataset / dataset series MUST link the created distribution via `dcat:distribution`.
+The created dataset or dataset series MUST link the created distribution via `dcat:distribution`.
 
 The created distribution MUST link the Solid-managed resource via `dcat:downloadURL`.
 
-> What about `dcat:inSeries` and `dcat:hasMember`?
-> IF the #SolidResource is part of a containment triple (`ldp:contains`) in _object position_ AND the resource in subject position is in the set of the recorded resources in the #DataCatalog, THEN the #Dataset resource describing the #SolidResource MUST link the #Dataset resource describing the resource which is _above_ the #SolidResource in the containment hierarchy via `dcat:inSeries`.
-> IF the #SolidResource is part of a containment triple (`ldp:contains`) in _subject position_ AND the resource in object position is in the set of the recorded resources in the #DataCatalog, THEN the #Dataset resource describing the #SolidResource MUST link the #Dataset resource describing the resource which is _below_ the #SolidResource in the containment hierarchy via `dcat:hasMember`.
+The predicates `dcat:inSeries` and `dcat:hasMember` can be used to represent the containment relations between Solid-managed resources stated by `ldp:contains` and their inverse.
 
 2. Linking the new catalog record
 
