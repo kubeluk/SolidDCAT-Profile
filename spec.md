@@ -25,11 +25,11 @@ The Solid DCAT Profile offers a discovery mechanism for Solid-based dataspaces b
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 ```
 
-## Profile Data Model
+## Data Model
 
 The Data Catalog Vocabulary (DCAT) provides standardized RDF terms for describing data catalogs in flexible ways. In some domains or in the context of specific applications, it is necessary or required to be more explicit about a data model's intended usage. The Solid DCAT Profile does exactly that. It adopts DCAT's data model in parts and states how Solid DCAT data catalogs are represented that augment Solid storages and curate their Solid-managed resources. In the following, we specify the added constraints on the data model as SHACL shapes.
 
-### Catalog Shape
+### Catalog
 
 A `dcat:Catalog` is a curated collection of metadata records describing some `dcat:Resource`. Our profile data model defines the following requirements w.r.t. data catalogs:
 1. Resources linked via `dcat:record` MUST conform to the shape `sdp:CatalogRecordShape`.
@@ -56,7 +56,7 @@ sdp:CatalogShape
     ] .
 ```
 
-### Catalog Record Shape
+### Catalog Record
 
 A `dcat:CatalogRecord` is a metadata document about `dcat:Resource` instances curated by a Solid DCAT data catalog. Our profile model defines the following requirements w.r.t. catalog records:
 1. A `dcat:CatalogRecord` document MUST link the resource that the document's metadata is about via `foaf:primaryTopic`.
@@ -81,7 +81,7 @@ sdp:CatalogRecordShape
     ] .
 ```
 
-### Dataset Shape
+### Dataset
 
 A `dcat:Dataset` is a collection of data, which comes in one or more representations that make the conceptual notion of a dataset accessible. Our profile model defines the following requirements w.r.t. datasets:
 1. A `dcat:Dataset` MUST link an accessible form of representation via `dcat:distribution` that conforms to the shape `sdp:DistributionShape`.
@@ -107,7 +107,7 @@ sdp:DatasetShape
 	] .
 ```
 
-### Dataset Series Shape
+### Dataset Series
 
 A `dcat:DatasetSeries` is a dataset which represents a collection of datasets that are published separately, but share some characteristics that group them. Our profile model defines the following requirements w.r.t. dataset series:
 1. As each instance of `dcat:DatasetSeries` is an instance of `dcat:Dataset`, a dataset series MUST conform to the shape `sdp:DatasetShape`.
@@ -131,7 +131,7 @@ sdp:DatasetSeriesShape
     ] .
 ```
 
-### Distribution Shape
+### Distribution
 
 A `dcat:Distribution` is an accessible form of a dataset such as a downloadable file. Our profile model defines the following requirements w.r.t. distributions:
 1. A distribution MUST link one downloadable file via `dcat:downloadURL`.
@@ -159,7 +159,7 @@ sdp:DistributionShape
 	] .
 ```
 
-## Profile Catalog Management Model
+## Catalog Management Model
 
 The profile's data model, introduced in the previous section, stated the shapes that define how Solid DCAT data catalogs are represented.
 The profile's catalog management model, introduced in this section, defines the catalog's bahaviour and how cataloged resources are managed.
@@ -261,7 +261,7 @@ A client SHOULD make use of Web Access Control (WAC) to restrict access to catal
 Assume the storage `<http://ex.org/s/>` on a #StorageServer that stores one container which contains one document:
 
 ```Turtle
-@prefix ldp: <http://www.w3.org/ns/dcat#> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
 @prefix pim: <http://www.w3.org/ns/pim/space#> .
 @base <http://ex.org/s/> .
 
