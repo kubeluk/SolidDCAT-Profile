@@ -243,9 +243,9 @@ A Solid DCAT data catalog MAY be discovered via a the `sdp:catalog` predicate:
 
 After discovering the catalog itself, the process of discovering datasets is composed of interacting with the resources defined in the profile's data model.
 
-A client MAY follow a `dcat:record` link to discover a catalog record containing metadata information about a Solid-managed resource.
+A client can follow a `dcat:record` link to discover a catalog record containing metadata information about a Solid-managed resource.
 
-A client MAY follow a `dcat:dataset` link to directly discover the dataset augmenting a Solid-managed resource.
+A client can follow a `dcat:dataset` link to directly discover the dataset augmenting a Solid-managed resource.
 
 ![Discovery Sequence Diagram](/diagrams/flow.svg)
 
