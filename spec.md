@@ -161,7 +161,7 @@ sdp:DistributionShape
 
 ## Catalog Management Model
 
-The profile's catalog management model, introduced in this section, defines the catalog's bahaviour and how cataloged resources are managed.
+This section describes the catalog's bahaviour and how cataloged resources are managed.
 
 ### Hosting a Solid DCAT Catalog
 
