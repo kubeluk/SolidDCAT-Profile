@@ -235,7 +235,7 @@ The Solid DCAT Profile follows the Linked Data Principles and the RESTful archit
 #### Discovering the catalog
 
 A Solid DCAT data catalog can be discovered via a the `sdp:catalog` predicate:
-1. A Solid DCAT data catalog MAY be discovered via the Solid storage server that hosts data recorded by the catalog by following a `sdp:catalog` link found in the server's description resource (cf. Solid Protocol §4.3.2).
+1. The Solid storage server that hosts data recorded by the catalog can reference the catalog in the server's description resource (cf. Solid Protocol §4.3.2).
 2. An agent's WebID profile document can reference a catalog which curates datasets offered by the agent.
 
 #### Discovering catalog resources
