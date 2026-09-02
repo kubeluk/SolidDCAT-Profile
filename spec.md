@@ -1,9 +1,3 @@
-# Solid DCAT Profile
-
-The Solid Protocol provides mechanisms for managing data in an interoperable and access-controlled manner across decentralized storage servers , enabling spaces of loosely connected data sources. Solid-based dataspaces follow a bottom-up paradigm, which describes an environment of autonomous, heterogeneous data sources that coexist without prior global integration.
-
-In such an environment, discovery is consiered a fundamental mechanism for establishing relationships between participants' data sources in an incremental fashion. To foster sustainable exchange and reuse of information, i.e., to establish beneficial and meaningful connections between dataspace participants, descriptive *metadata* about the sources and their offered data products need to be captured and managed in a systematic, interoperable and standards-based manner. Ad-hoc or proprietary solutions undermine cross-participant interaction.
-
 ## TL;DR
 
 The Solid DCAT Profile offers a discovery mechanism for Solid-based dataspaces by augmenting Solid's RESTful, resource-centric perspective with a dataset-centric, data catalog-style view based on the DCAT standard. By additionally understanding the data catalog itself as a collection of data which allows (1) the data catalog to be managed and interacted with via the Solid Protocol, and (2) the Solid-managed *data catalog* to be decoupled from the Solid-managed *cataloged data*, the Solid DCAT Profile provides the following benefits:
