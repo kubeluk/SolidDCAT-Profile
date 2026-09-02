@@ -86,7 +86,7 @@ sdp:CatalogRecordShape
 
 A `dcat:Dataset` is a collection of data, which comes in one or more representations that make the conceptual notion of a dataset accessible. Our profile model defines the following requirements w.r.t. datasets:
 1. A `dcat:Dataset` MUST link an accessible form of representation via `dcat:distribution` that conforms to the shape `sdp:DistributionShape`.
-2. A `dcat:Dataset` MUST link a theme via `dcat:theme` to state the dataset's main category.
+2. A `dcat:Dataset` SHOULD link a theme via `dcat:theme` to state the dataset's main category.
 3. Resources linked via `dcat:inSeries` MUST conform to the shape `sdp:DatasetSeriesShape`.
 
 ```Turtle
