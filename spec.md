@@ -211,9 +211,9 @@ The created distribution MUST link the Solid-managed resource via `dcat:download
 
 The new catalog record MUST be linked by the root catalog document via `dcat:record`.
 
-A client MAY perform step 1 by a HTTP `POST` request to a URI path ending with `/` as defined in the Solid Protocol (§5.3).
+A client performs step 1 by a HTTP `POST` request to a URI path ending with `/` as defined in the Solid Protocol (§5.3).
 
-A client MAY perform step 2 by a HTTP `PATCH` request to the root catalog document as defined in the Solid Protocol (§5.3.1).
+A client performs step 2 by a HTTP `PATCH` request to the root catalog document as defined in the Solid Protocol (§5.3.1).
 
 ### Reading a Catalog Resource
 
