@@ -221,7 +221,7 @@ Clients retrieve a representation of a resource's state using HTTP `GET`, `HEAD`
 
 ### Updating a Catalog Resource
 
-Solid DCAT catalog resources MAY be modified using N3 patches as defined in the Solid Protocol (§5.3.1).
+Clients can modify Solid DCAT catalog resources using N3 patches as defined in the Solid Protocol (§5.3.1).
 
 ### Removing a Catalog Resource
 
