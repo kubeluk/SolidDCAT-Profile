@@ -226,12 +226,11 @@ Clients can modify Solid DCAT catalog resources using N3 patches as defined in t
 
 The Solid DCAT Profile follows the Linked Data Principles and the RESTful architecture-style of the Web. A Solid DCAT data catalog serves as a common entry point for conducting discovery procedures and thus can be referenced by other resources.
 
-A resource referencing a Solid DCAT data catalog MUST use the predicate `http://purl.org/sdp/terms#catalog`.
 
 #### Discovering the catalog
 
 A Solid DCAT data catalog can be discovered via a the `sdp:catalog` predicate:
-1. A Solid DCAT data catalog MAY be discovered via the Solid storage server that hosts data recorded by the catalog by following a `sdp:catalog` link found in the server's description resource (cf. Solid Protocol §4.3.2).
+1. The Solid storage server that hosts data recorded by the catalog can reference the catalog in the server's description resource (cf. Solid Protocol §4.3.2).
 2. An agent's WebID profile document can reference a catalog which curates datasets offered by the agent.
 
 #### Discovering catalog resources
