@@ -28,6 +28,7 @@ The Solid DCAT Profile offers a discovery mechanism for Solid-based dataspaces b
 ## Data Model
 
 The Data Catalog Vocabulary (DCAT) provides standardized RDF terms for describing data catalogs in flexible ways. In some domains or in the context of specific applications, it is necessary or required to be more explicit about a data model's intended usage. The Solid DCAT Profile does exactly that. It adopts DCAT's data model in parts and states how Solid DCAT data catalogs are represented that augment Solid storages and curate their Solid-managed resources. In the following, we specify the added constraints on the data model as SHACL shapes.
+This section describes the shapes that define how Solid DCAT data catalogs are represented.
 
 ### Catalog
 
