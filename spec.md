@@ -217,7 +217,7 @@ A client performs step 2 by a HTTP `PATCH` request to the root catalog document 
 
 ### Reading a Catalog Resource
 
-Clients retrieve a representation of a resource's state using HTTP `GET`, `HEAD` and `OPTIONS`, as defined in the Solid Protocol (§5.2).
+Clients can retrieve a representation of a resource's state using HTTP `GET`, `HEAD` and `OPTIONS`, as defined in the Solid Protocol (§5.2).
 
 ### Updating a Catalog Resource
 
