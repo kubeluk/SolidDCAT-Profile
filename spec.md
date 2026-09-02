@@ -237,7 +237,7 @@ A resource referencing a Solid DCAT data catalog MUST use the predicate `http://
 
 A Solid DCAT data catalog MAY be discovered via a the `sdp:catalog` predicate:
 1. A Solid DCAT data catalog MAY be discovered via the Solid storage server that hosts data recorded by the catalog by following a `sdp:catalog` link found in the server's description resource (cf. Solid Protocol §4.3.2).
-2. A Solid DCAT data catalog MAY be discovered via an agent's WebID document by following a `sdp:catalog` link that points to a Solid storage server hosting a catalog which curates datasets offered by the agent.
+2. An agent's WebID profile document can reference a catalog which curates datasets offered by the agent.
 
 #### Discovering catalog resources
 
