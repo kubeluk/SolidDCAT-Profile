@@ -252,7 +252,7 @@ A client MAY follow a `dcat:dataset` link to directly discover the dataset augme
 
 ### Controling access to a catalog record
 
-A client SHOULD make use of Web Access Control (WAC) to restrict access to catalog documents (cf. Solid Protocol §11)
+Clients are encouraged to make use of Web Access Control (WAC) to restrict access to catalog documents (cf. Solid Protocol §11)
 
 **_TODO_**: Access controlling catalog records vs. Solid-managed resources
 
