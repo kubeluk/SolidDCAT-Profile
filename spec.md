@@ -182,7 +182,7 @@ The root data catalog document and all its referenced catalog record documents M
 
 There is a 1-1 correspondence between Solid DCAT catalog record documents and information resources managed by a Solid storage server.
 
-A Solid-managed resource that was added to a Solid DCAT data catalog MUST be augmented by exactly one catalog record that conforms to the shape `sdp:CatalogRecordShape`.
+When a Solid-managed resource is added to a Solid DCAT data catalog, the Solid DCAT data catalog MUST include at least one catalog record that conforms to the shape `sdp:CatalogRecordShape` and that links to the Solid-managed resource.
 
 Clients can add a new Solid-managed resource to a Solid DCAT data catalog by performing the following operations:
 
