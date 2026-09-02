@@ -41,7 +41,7 @@ sdp:CatalogShape
     sh:targetClass dcat:Catalog ;
     sh:property [
         sh:path dcat:record ;
-        sh:node sdp:CatalogRecordShape .
+        sh:node sdp:CatalogRecordShape
     ] ;
     sh:property [
         sh:path dcat:dataset ;
@@ -84,7 +84,7 @@ sdp:CatalogRecordShape
 ### Dataset Shape
 
 A `dcat:Dataset` is a collection of data, which comes in one or more representations that make the conceptual notion of a dataset accessible. Our profile model defines the following requirements w.r.t. datasets:
-1. A `dcat:Dataset` MUST link an accessible form of representation via `dcat:Distribution` that conforms to the shape `sdp:DistributionShape`.
+1. A `dcat:Dataset` MUST link an accessible form of representation via `dcat:distribution` that conforms to the shape `sdp:DistributionShape`.
 2. A `dcat:Dataset` MUST link a theme via `dcat:theme` to state the dataset's main category.
 3. Resources linked via `dcat:inSeries` MUST conform to the shape `sdp:DatasetSeriesShape`.
 
@@ -248,11 +248,13 @@ A client MAY follow a `dcat:record` link to discover a catalog record containing
 
 A client MAY follow a `dcat:dataset` link to directly discover the dataset augmenting a Solid-managed resource.
 
-> **_TODO_**: add sequence diagram from paper
+![Discovery Sequence Diagram](/diagrams/flow.svg)
 
 ### Controling access to a catalog record
 
 A client SHOULD make use of Web Access Control (WAC) to restrict access to catalog documents (cf. Solid Protocol §11)
+
+**_TODO_**: Access controlling catalog records vs. Solid-managed resources
 
 ## Example
 
