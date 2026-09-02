@@ -198,7 +198,6 @@ The fragment identifier component for a dataset / dataset series MAY be `#ds`.
 
 An instance of type `dcat:Distribution` MUST be created as a secondary resource by referencing the primary catalog record resource and an additional fragment identifier component.
 
-The fragement identifier component for a distribution MAY be `#dist`.
 
 The created dataset / dataset series MUST link the created distribution via `dcat:distribution`.
 
