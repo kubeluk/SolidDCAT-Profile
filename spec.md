@@ -161,7 +161,6 @@ sdp:DistributionShape
 
 ## Catalog Management Model
 
-The profile's data model, introduced in the previous section, stated the shapes that define how Solid DCAT data catalogs are represented.
 The profile's catalog management model, introduced in this section, defines the catalog's bahaviour and how cataloged resources are managed.
 
 ### Hosting a Solid DCAT Catalog
