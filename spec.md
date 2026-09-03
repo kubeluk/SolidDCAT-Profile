@@ -245,9 +245,11 @@ A client can follow a `dcat:dataset` link to directly discover the dataset augme
 
 ### Controling access to a catalog record
 
-Clients are encouraged to make use of Web Access Control (WAC) to restrict access to catalog documents (cf. Solid Protocol §11)
+Catalog records are managed by Solid storages and are conceptually separated from their corresponding primary resources which they augment.
 
-**_TODO_**: Access controlling catalog records vs. Solid-managed resources
+Clients can manage the access of Solid-managed catalog record resources and their Solid-managed primary counterpart individually.
+
+Clients are encouraged to make use of Web Access Control (WAC) to restrict access to catalog documents (cf. Solid Protocol §11).
 
 ## Example
 
