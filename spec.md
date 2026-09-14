@@ -226,10 +226,9 @@ Clients are responsible for managing the containment hierarchy of datasets such 
 
 The Solid DCAT Profile follows the Linked Data Principles and the RESTful architecture-style of the Web. A Solid DCAT data catalog serves as a common entry point for conducting discovery procedures and thus can be referenced by other resources.
 
-
 #### Discovering the catalog
 
-A Solid DCAT data catalog can be discovered via a the `sdp:catalog` predicate:
+A Solid DCAT data catalog can be discovered via the `sdp:catalog` predicate:
 1. The Solid storage server that hosts data recorded by the catalog can reference the catalog in the server's description resource (cf. Solid Protocol §4.3.2).
 2. An agent's WebID profile document can reference a catalog which curates datasets offered by the agent.
 
