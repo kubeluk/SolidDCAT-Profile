@@ -244,7 +244,7 @@ A client can follow a `dcat:dataset` link to directly discover the dataset augme
 
 ### Controling access to a catalog record
 
-Catalog records are managed by Solid storages and are separated from their corresponding primary resources by design.
+Catalog records are stored on Solid storages and are separated from their corresponding primary resources by design.
 
 Clients can manage the access of Solid-managed catalog record resources and their Solid-managed primary counterpart individually.
 
