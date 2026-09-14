@@ -246,7 +246,7 @@ A client can follow a `dcat:dataset` link to directly discover the dataset augme
 
 Catalog records are stored on Solid storages and are separated from their corresponding primary resources by design.
 
-Clients can manage the access of Solid-managed catalog record resources and their Solid-managed primary counterpart individually.
+Clients can manage the access of catalog record resources and their Solid-managed primary counterparts individually.
 
 Clients are encouraged to make use of Web Access Control (WAC) to restrict access to catalog documents (cf. Solid Protocol §11).
 
