@@ -216,7 +216,7 @@ Clients can modify Solid DCAT catalog resources using N3 patches as defined in t
 
 Clients can remove Solid-managed resources from the catalog by performing the following operations:
 
-1. IF the corresponding catalog record contains a triple with predicate `dcat:inSeries`, remove the triple that links to the record via `dcat:hasMember` from the mentioned dataset series by sending a HTTP `PATCH` request to the series IRI as defined in the Solid Protocol (§5.3.1).
+1. IF the corresponding catalog record contains a triple with predicate `dcat:inSeries`, remove the triple that links to the record via `dcat:seriesMember` from the mentioned dataset series by sending a HTTP `PATCH` request to the series IRI as defined in the Solid Protocol (§5.3.1).
 2. Remove the catalog record itself by sending a HTTP `DELETE` request to the record IRI as defined in the Solid Protocol (§5.4).
 3. Remove the triple that links the data catalog and the deleted catalog record via `dcat:record` by sending a HTTP `PATCH` request to the catalog IRI.
 
