@@ -194,7 +194,7 @@ The created dataset or dataset series MUST link the created distribution via `dc
 
 The created distribution MUST link the Solid-managed resource via `dcat:downloadURL`.
 
-The predicates `dcat:inSeries` and `dcat:hasMember` can be used to represent the containment relations between Solid-managed resources stated by `ldp:contains` and their inverse.
+The predicates `dcat:inSeries` and `dcat:seriesMember` can be used to represent the containment relations between Solid-managed resources stated by `ldp:contains` and their inverse.
 
 2. Linking the new catalog record
 
