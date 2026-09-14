@@ -40,12 +40,15 @@ sdp:CatalogShape
     ] ;
     sh:property [
         sh:path dcat:dataset ;
-        sh:xone (
+        sh:node sdp:DatasetShape ;
+        sh:class dcat:Dataset ;
+        sh:or (
             [
-                sh:node sdp:DatasetShape
+                sh:not [ sh:class dcat:DatasetSeries ]
             ]
             [
-                sh:node sdp:DatasetSeriesShape
+                sh:node sdp:DatasetSeriesShape ;
+                sh:class dcat:DatasetSeries
             ]
         )
     ] .
@@ -63,16 +66,19 @@ sdp:CatalogRecordShape
     sh:targetClass dcat:CatalogRecord ;
     sh:property [
         sh:path foaf:primaryTopic ;
-        sh:xone (
-            [
-                sh:node sdp:DatasetShape
-            ]
-            [
-                sh:node sdp:DatasetSeriesShape
-            ]
-        ) ;
         sh:minCount 1 ;
-        sh:maxCount 1
+        sh:maxCount 1 ;
+        sh:node sdp:DatasetShape ;
+        sh:class dcat:Dataset ;
+        sh:or (
+            [
+                sh:not [ sh:class dcat:DatasetSeries ]
+            ]
+            [
+                sh:node sdp:DatasetSeriesShape ;
+                sh:class dcat:DatasetSeries
+            ]
+        )
     ] .
 ```
 
@@ -115,14 +121,17 @@ sdp:DatasetSeriesShape
     sh:node sdp:DatasetShape ;
     sh:property [
         sh:path dcat:seriesMember ;
-        sh:xone (
+        sh:node sdp:DatasetShape ;
+        sh:class dcat:Dataset ;
+        sh:or (
             [
-                sh:node sdp:DatasetShape
+                sh:not [ sh:class dcat:DatasetSeries ]
             ]
             [
-                sh:node sdp:DatasetSeriesShape
+                sh:node sdp:DatasetSeriesShape ;
+                sh:class dcat:DatasetSeries
             ]
-        ) ;
+        )
     ] .
 ```
 
