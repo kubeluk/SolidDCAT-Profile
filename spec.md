@@ -328,7 +328,7 @@ The following example shows the state of all resources on the #StorageServer whe
 <#ds>
 	a dcat:DatasetSeries ;
 	dcat:distribution <#dist1> ;
-	dcat:hasMember <r2#ds> .
+	dcat:seriesMember <r2#ds> .
 	
 <#dist1>
 	a dcat:Distribution ;
