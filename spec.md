@@ -251,7 +251,7 @@ A client can follow a `dcat:dataset` link to directly discover the dataset augme
 
 ![Discovery Sequence Diagram](/diagrams/flow.svg)
 
-### Controling access to a catalog record
+### Controlling access to a catalog record
 
 Catalog records are stored on Solid storages and are separated from their corresponding primary resources by design.
 
