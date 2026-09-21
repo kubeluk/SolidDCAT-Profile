@@ -201,7 +201,7 @@ When the resource is a `ldp:Container`, an instance of type `dcat:DatasetSeries`
 
 When the resource is *not* a `ldp:Container`, an instance of type `dcat:Dataset` MUST be created as a secondary resource to the primary catalog record resource. The catalog record MUST reference the dataset via `foaf:primaryTopic`.
 
-An instance of type `dcat:Distribution` MUST be created as a secondary resource by referencing the primary catalog record resource and an additional fragment identifier component.
+An instance of type `dcat:Distribution` MUST be created as a secondary resource to the primary catalog record resource and an additional fragment identifier component.
 
 The created dataset or dataset series MUST link the created distribution via `dcat:distribution`.
 
