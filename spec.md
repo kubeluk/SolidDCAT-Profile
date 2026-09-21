@@ -115,7 +115,8 @@ sdp:DatasetShape
 
 A `dcat:DatasetSeries` is a dataset which represents a collection of datasets that are published separately, but share some characteristics that group them. Our profile model defines the following requirements w.r.t. dataset series:
 1. As each instance of `dcat:DatasetSeries` is an instance of `dcat:Dataset`, a dataset series MUST conform to the shape `sdp:DatasetShape`.
-2. Resources linked  via `dcat:seriesMember` MUST conform to exactly one of the two shapes `sdp:DatasetShape` or `sdp:DatasetSeriesShape`.
+2. Resources linked via `dcat:seriesMember` MUST conform to `sdp:DatasetShape`.
+3. If a linked resource is of class `dcat:DatasetSeries`, it MUST conform to `sdp:DatasetSeriesShape`.
 
 ```Turtle
 sdp:DatasetSeriesShape
