@@ -286,25 +286,6 @@ The following example shows the state of all resources on the #StorageServer whe
 
 ```Turtle
 @prefix ldp: <http://www.w3.org/ns/dcat#> .
-@prefix pim: <http://www.w3.org/ns/pim/space#> .
-@base <http://ex.org/s/> .
-
-<>
-	a pim:Storage ;
-	ldp:contains <c/> .
-```
-
-```Turtle
-@prefix ldp: <http://www.w3.org/ns/dcat#> .
-@base <http://ex.org/s/c/> .
-
-<>
-	a ldp:Container ;
-	ldp:contains <1> .
-```
-
-```Turtle
-@prefix ldp: <http://www.w3.org/ns/dcat#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @base <http://ex.org/s/c/1> .
 
@@ -318,7 +299,7 @@ The following example shows the state of all resources on the #StorageServer whe
 
 ```Turtle
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@base <http://ex.org/cat/alog> .
+@base <http://ex.org/s/cat/alog> .
 
 <#it>
 	a dcat:Catalog ;
@@ -328,7 +309,7 @@ The following example shows the state of all resources on the #StorageServer whe
 ```Turtle
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@base <http://ex.org/cat/r1> .
+@base <http://ex.org/s/cat/r1> .
 
 <> 
 	a dcat:CatalogRecord ;
@@ -336,18 +317,21 @@ The following example shows the state of all resources on the #StorageServer whe
 	
 <#ds>
 	a dcat:DatasetSeries ;
+    dcat:theme <http://ex.org/themes#someTheme> ;
 	dcat:distribution <#dist1> ;
 	dcat:seriesMember <r2#ds> .
 	
 <#dist1>
 	a dcat:Distribution ;
-	dcat:downloadURL <../s/c/> .
+	dcat:downloadURL <../c/> ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+    dcterms:conformsTo <http://www.w3.org/ns/ldp#BasicContainer> .
 ```
 
 ```Turtle
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@base <http://ex.org/cat/r2> .
+@base <http://ex.org/s/cat/r2> .
 
 <>
 	a dcat:CatalogRecord ;
@@ -355,10 +339,14 @@ The following example shows the state of all resources on the #StorageServer whe
 	
 <#ds>
 	a dcat:Dataset ;
+    dcat:theme <http://ex.org/themes#someOtherTheme> ;
 	dcat:distribution <#dist1> ;
 	dcat:inSeries <r1#ds> .
 	
 <#dist1>
 	a dcat:Distribution ;
-	dcat:downloadURL <../s/c/1> .
+	dcat:downloadURL <../c/1> ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+    dcterms:conformsTo <http://www.w3.org/ns/ldp#Resource> ;
+    dcterms:conformsTo <../shapes/someShape.ttl> .
 ```
