@@ -199,7 +199,7 @@ A catalog record MUST be created on a Solid storage server.
 
 When the resource is a `ldp:Container`, an instance of type `dcat:DatasetSeries` MUST be created as a secondary resource to the primary catalog record. The catalog record MUST reference the dataset series via `foaf:primaryTopic`.
 
-When the resource is *not* a `ldp:Container` an instance of type `dcat:Dataset` MUST be created as a secondary resource by referencing the primary catalog record resource and an additional fragment identifier component. The catalog record MUST reference the dataset via `foaf:primaryTopic`.
+When the resource is *not* a `ldp:Container`, an instance of type `dcat:Dataset` MUST be created as a secondary resource to the primary catalog record resource. The catalog record MUST reference the dataset via `foaf:primaryTopic`.
 
 An instance of type `dcat:Distribution` MUST be created as a secondary resource by referencing the primary catalog record resource and an additional fragment identifier component.
 
