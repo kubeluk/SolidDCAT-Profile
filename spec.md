@@ -58,7 +58,8 @@ sdp:CatalogShape
 
 A `dcat:CatalogRecord` is a metadata document about a Solid resource. Our profile model defines the following requirements w.r.t. catalog records:
 1. A `dcat:CatalogRecord` document MUST link the targeted Solid resource that the document's metadata is about via `foaf:primaryTopic`.
-2. A catalog record's primary topic MUST conform to exactly one of the two shapes `sdp:DatasetShape` or `sdp:DatasetSeriesShape`.
+2. A catalog record's primary topic MUST conform to `sdp:DatasetShape`.
+3. If the primary topic is of class `dcat:DatasetSeries`, it MUST conform to `sdp:DatasetSeriesShape`.
 
 ```Turtle
 sdp:CatalogRecordShape
