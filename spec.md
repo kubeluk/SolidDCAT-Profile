@@ -274,7 +274,7 @@ Assume the storage `<http://ex.org/s/>` on a #StorageServer that stores one cont
 ```
 
 ```Turtle
-@prefix ldp: <http://www.w3.org/ns/dcat#> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
 @base <http://ex.org/s/c/> .
 
 <>
