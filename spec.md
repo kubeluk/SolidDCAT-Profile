@@ -165,7 +165,7 @@ sdp:DistributionShape
 
 ## Catalog Management Model
 
-This section describes the catalog's bahaviour and how cataloged resources are managed.
+This section describes the catalog's behaviour and how cataloged resources are managed.
 
 ### Hosting a Solid DCAT Catalog
 
