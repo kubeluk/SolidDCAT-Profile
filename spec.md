@@ -179,7 +179,7 @@ These two types of documents are Solid-managed information resources:
 - The behaviour of a data catalog root document MUST correspond to a Linked Data Platform RDF Source (LDP-RS).
 - The behaviour of a catalog record document MUST correspond to a Linked Data Platform RDF Source (LDP-RS).
 
-The root data catalog document and all its referenced catalog record documents MAY be managed by the same Solid storage server. Nevertheless, federated deployment scanarios are also possible, where the documents are distributed across various Solid storage servers.
+The root data catalog document and all its referenced catalog record documents MAY be managed by the same Solid storage server. Nevertheless, federated deployment scenarios are also possible, where the documents are distributed across various Solid storage servers.
 
 ### Adding a Resource to a Catalog
 
