@@ -285,7 +285,7 @@ Assume the storage `<http://ex.org/s/>` on a #StorageServer that stores one cont
 The following example shows the state of all resources on the #StorageServer when the #DataCatalog itself is hosted on the same #StorageServer and each #SolidResource was recorded in the #DataCatalog. The #DataCatalog document's location on the #StorageServer is up to the implementor's choice. For this example, the location `<http://ex.org/s/cat/alog>` was chosen:
 
 ```Turtle
-@prefix ldp: <http://www.w3.org/ns/dcat#> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @base <http://ex.org/s/c/1> .
 
