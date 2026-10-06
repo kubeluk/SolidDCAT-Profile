@@ -20,7 +20,8 @@
         },
         {
           name: "Florian Hölken",
-          company: "University of Wuppertal",
+          company: "TMDT - University of Wuppertal",
+          companyURL: "https://tmdt.uni-wuppertal.de/de/",
         }
       ],
       authors: [
@@ -31,23 +32,28 @@
         },
         {
           name: "Florian Hölken",
-          company: "University of Wuppertal",
+          company: "TMDT - University of Wuppertal",
+          companyURL: "https://tmdt.uni-wuppertal.de/de/",
         },
         {
           name: "Christoph H.-J. Braun",
           company: "FZI Forschungszentrum Informatik",
+          companyURL: "https://www.fzi.de/",
         },
         {
           name: "André Pomp",
-          company: "University of Wuppertal",
+          company: "TMDT - University of Wuppertal",
+          companyURL: "https://tmdt.uni-wuppertal.de/de/",
         },
         {
           name: "Tobias Meisen",
-          company: "University of Wuppertal",
+          company: "TMDT - University of Wuppertal",
+          companyURL: "https://tmdt.uni-wuppertal.de/de/",
         },
         {
           name: "Tobias Käfer",
           company: "FZI Forschungszentrum Informatik",
+          companyURL: "https://www.fzi.de/",
         }
       ],
       github: "kubeluk/SolidDCAT-Profile",
@@ -96,18 +102,18 @@
   </script>
 </head>
 
-<body about="" prefix="rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# owl: http://www.w3.org/2002/07/owl# xsd: http://www.w3.org/2001/XMLSchema# dcterms: http://purl.org/dc/terms/ skos: http://www.w3.org/2004/02/skos/core# prov: http://www.w3.org/ns/prov# dcat: http://www.w3.org/ns/dcat# schema: http://schema.org/ ldp: http://www.w3.org/ns/ldp# spec: http://www.w3.org/ns/spec# sdp: http://example.org/sdp#">
+<body about="" prefix="rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# owl: http://www.w3.org/2002/07/owl# xsd: http://www.w3.org/2001/XMLSchema# dcterms: http://purl.org/dc/terms/ skos: http://www.w3.org/2004/02/skos/core# prov: http://www.w3.org/ns/prov# dcat: http://www.w3.org/ns/dcat# schema: http://schema.org/ ldp: http://www.w3.org/ns/ldp# spec: http://www.w3.org/ns/spec# sdp: http://purl.org/sdp/terms#">
 
   <section id="abstract">
     <p>
-      This specification defines the Solid DCAT Profile, a standard mechanism for discovering datasets within the Solid ecosystem. 
+      This specification defines the Solid DCAT Profile, a standard mechanism for discovering datasets within the Solid ecosystem.
       By mapping the resource-centric architecture of the Solid Protocol to the dataset-centric data model of the Data Catalog Vocabulary (DCAT), this profile enables clients to discover and traverse resources across decentralized Solid storages using standard HTTP link traversal.
     </p>
   </section>
-  
+
   <section id="sotd">
     <p>
-      This is an unofficial proposal intended for review by the W3C Solid Community Group. 
+      This is an unofficial proposal intended for review by the W3C Solid Community Group.
       This specification builds upon concepts initially presented  <a href="https://sosy2026.eu/Posters/">as a poster at the Solid Symposium 2026</a> and the <a href="https://dbis.rwth-aachen.de/SDS26/">Fourth International Workshop on Semantics in Dataspaces (SDS 2026)</a> [[SOLID-DCAT-WS]].
     </p>
   </section>
@@ -115,18 +121,18 @@
   <section id="introduction" class="informative">
     <h2>Introduction</h2>
     <p>
-      The Solid Protocol [[SOLID-PROTOCOL]] provides mechanisms for managing data in an interoperable and access-controlled manner across decentralized storages. 
-      However, the protocol itself does not prescribe a standard mechanism for discovering datasets across these federated environments. 
+      The Solid Protocol [[SOLID-PROTOCOL]] provides mechanisms for managing data in an interoperable and access-controlled manner across decentralized storages.
+      However, the protocol itself does not prescribe a standard mechanism for discovering datasets across these federated environments.
     </p>
-    <p>
-      This specification provides a uniform, catalog-centric discovery mechanism. 
-      The Solid DCAT Profile defines how to expose data made available on Solid storages using the Data Catalog Vocabulary (DCAT) [[DCAT]]. 
-      By treating the catalog and its records as native Solid-stored resources, implementations are able to re-use Solid's existing mechanisms for authentication, authorization, and data interaction.
-    </p>
-    <p>
-      This approach is strictly RESTful and relies on link traversal ("follow-your-nose"), allowing clients to discover resources independently of the server's underlying physical container hierarchy. 
-      Furthermore, it explicitly separates the access control of discovery metadata from the source data, ensuring granular privacy preservation.
-    </p>
+    <p>The Solid DCAT Profile offers a discovery mechanism for Solid-based dataspaces by augmenting Solid's RESTful, resource-centric perspective with a dataset-centric, data catalog-style view based on the DCAT standard. By additionally understanding the data catalog itself as a collection of data which allows (1) the data catalog to be managed and interacted with via the Solid Protocol, and (2) the Solid-managed <em>data catalog</em> to be decoupled from the Solid-managed <em>cataloged data</em>, the Solid DCAT Profile provides the following benefits:</p>
+    <ol>
+    <li>Standards-based metadata descriptions via DCAT terms.</li>
+    <li>Follow-your-nose approach to data discovery, as further popularized by the Linked Data Principles.</li>
+    <li>Solid's native authorization mechanism can be re-used for controlling access to individual catalog records allowing for granular privacy preservation.</li>
+    <li>Possibility to independently manage the access control of the catalog itself and the source data described by the catalog.</li>
+    <li>Possibility to individually select which source data to record in the data catalog.</li>
+    <li>Possibility to distribute a data catalog across multiple Solid storages, allowing for federated catalog deployments.</li>
+    </ol>
 
     <p>This specification is intended for:</p>
 
@@ -137,9 +143,10 @@
     </ul>
 
     <section id="terminology" class="informative">
-      <h2>Terminology</h2>
+      <h3>Terminology</h3>
       <p>
         This specification adopts terminology from the Linked Data Platform (LDP) and the Data Catalog Vocabulary (DCAT), including but not limited to:
+      </p>
       <dl>
         <dt><dfn id="resource"><a href="https://www.w3.org/TR/ldp/#dfn-linked-data-platform-resource">resource</a></dfn></dt>
         <dd>The target of an HTTP request identified by a URI, corresponding to a Linked Data Platform Resource (LDPR).</dd>
@@ -154,102 +161,419 @@
         <dt><dfn id="catalog-record">catalog record</dfn></dt>
         <dd>A document describing metadata information about a cataloged resource, represented by <code>dcat:CatalogRecord</code>.</dd>
       </dl>
-      </p>
-    </section>
-
-    <section id="conform" class="normative">
-      <h2>Conformance</h2>
-      <p>This section describes the <span about="" rel="spec:conformance" resource="#conformance">conformance model of the Solid DCAT Profile</span>.</p>
-
-      <section id="normative-informative-content" inlist="" rel="schema:hasPart" resource="#normative-informative-content"><a class="self-link" href="#normative-informative-content"></a>
-        <h4 property="schema:name">Normative and Informative Content</h4>
-        <div datatype="rdf:HTML" property="schema:description">
-          <p id="normative-informative-sections"><a class="self-link" href="#normative-informative-sections"></a>All assertions, diagrams, examples, and notes are non-normative, as are all sections explicitly marked non-normative. Everything else is normative.</p>
-          <p id="requirement-levels"><a class="self-link" href="#requirement-levels"></a>The key words “<span rel="dcterms:subject" resource="spec:MUST">MUST</span>”, “<span rel="dcterms:subject" resource="spec:MUSTNOT">MUST</span>”, “<span rel="dcterms:subject" resource="spec:SHOULD">SHOULD</span>”, and “<span rel="dcterms:subject" resource="spec:MAY">MAY</span>” are to be interpreted as described in <a href="https://tools.ietf.org/html/bcp14">BCP 14</a> [[!RFC2119]] [[!RFC8174]] when, and only when, they appear in all capitals, as shown here.</p>
-        </div>
-      </section>
-
-      <section id="specification-category" inlist="" rel="schema:hasPart" resource="#specification-category" typeof="skos:ConceptScheme"><a class="self-link" href="#specification-category"></a>
-        <h4 property="schema:name skos:prefLabel">Specification Category</h4>
-        <div datatype="rdf:HTML" property="schema:description">
-          <p property="skos:definition">The <span about="" rel="spec:specificationCategory" resource="#specification-category">Solid DCAT Profile</span> identifies the following <cite><a href="https://www.w3.org/TR/spec-variability/#spec-cat" rel="dcterms:subject" resource="spec:SpecificationCategory">Specification Category</a></cite> to distinguish the types of conformance: <span rel="skos:hasTopConcept" resource="spec:NotationSyntax">notation/syntax</span>, <span rel="skos:hasTopConcept" resource="spec:ProcessorBehavior">processor behavior</span>, <span rel="skos:hasTopConcept" resource="spec:Protocol">protocol</span>.</p>
-        </div>
-      </section>
-
-      <section id="classes-of-products" inlist="" rel="schema:hasPart" resource="#classes-of-products" typeof="skos:ConceptScheme"><a class="self-link" href="#classes-of-products"></a>
-        <h4 property="schema:name skos:prefLabel">Classes of Products</h4>
-        <div datatype="rdf:HTML" property="schema:description">
-          <p property="skos:definition">The <span about="" rel="spec:classesOfProducts" resource="#classes-of-products">Solid DCAT Profile</span> identifies the following <cite><a href="https://www.w3.org/TR/qaframe-spec/#cop-def" rel="dcterms:subject" resource="spec:ClassesOfProducts">Classes of Products</a></cite> for conforming implementations.</p>
-
-          <dl rel="skos:hasTopConcept">
-            <dt about="#Catalog" property="skos:prefLabel" rel="skos:broadMatch" resource="spec:Content" typeof="skos:Concept"><dfn id="Catalog"><a class="self-link" href="#Catalog"></a>Data Catalog</dfn></dt>
-            <dd about="#Catalog" property="skos:definition">A collection of RDF document representing the catalog structure, utilizing <code>dcat:Catalog</code>, <code>dcat:Dataset</code>, <code>dcat:DatasetSeries</code>, and <code>dcat:Distribution</code> to describe resources and containers.</dd>
-            
-            <dt about="#Server" property="skos:prefLabel" rel="skos:broadMatch" resource="spec:RespondingAgent" typeof="skos:Concept"><dfn id="Server"><a class="self-link" href="#Server"></a>Storage Server</dfn></dt>
-            <dd about="#Server" property="skos:definition">A system responsible for hosting resources, containers, and the catalog records themselves, responding to HTTP requests, and exposing catalog links.</dd>
-            
-            <dt about="#Client" property="skos:prefLabel" rel="skos:broadMatch" resource="spec:Consumer" typeof="skos:Concept"><dfn id="Client"><a class="self-link" href="#Client"></a>Discovery Client</dfn></dt>
-            <dd about="#Client" property="skos:definition">A software application that issues HTTP requests to discover the catalog via WebID profiles or server descriptions, and traverses <code>dcat:record</code> and <code>dcat:distribution</code> links to access data.</dd>
-          </dl>
-        </div>
-      </section>
-
-    <section id="interoperability" inlist="" rel="schema:hasPart" resource="#interoperability" typeof="skos:ConceptScheme"><a class="self-link" href="#interoperability"></a>
-        <h4 property="schema:name skos:prefLabel">Interoperability</h4>
-        <div datatype="rdf:HTML" property="schema:description">
-          <p>This profile establishes interoperability across the following dimensions:</p>
-          <dl>
-            <dt about="#client-server-interoperability" property="skos:prefLabel" typeof="skos:Concept"><dfn id="client-server-interoperability"><a class="self-link" href="#client-server-interoperability"></a>Client–Server Interoperability</dfn></dt>
-            <dd about="#client-server-interoperability" property="skos:definition">
-              Interoperability of implementations for Discovery Clients and Storage Servers is tested by evaluating an implementation's ability to request, respond to, and process HTTP messages containing DCAT and LDP vocabularies that conform to this specification. 
-              Interoperability is achieved when a Discovery Client, given a discovery entry point (such as an agent's WebID or a storage description), can successfully traverse the <code>dcat:record</code> and <code>dcat:distribution</code> links to obtain and validate the corresponding datasets from any conforming Storage Server.
-            </dd>
-
-            <dt about="#cross-ecosystem-interoperability" property="skos:prefLabel" typeof="skos:Concept"><dfn id="cross-ecosystem-interoperability"><a class="self-link" href="#cross-ecosystem-interoperability"></a>Cross-Ecosystem Interoperability</dfn></dt>
-            <dd about="#cross-ecosystem-interoperability" property="skos:definition">
-              Interoperability of implementations for Storage Servers and external Data Catalogs is tested by evaluating the ability of external, non-Solid clients to provide and consume exposed metadata. 
-              Interoperability is achieved when a non-Solid, standard DCAT-compliant catalog or agent can successfully consume the <code>dcat:Catalog</code>, <code>dcat:Dataset</code>, and <code>dcat:Distribution</code> descriptions hosted on a conforming Storage Server using standard RDF and HTTP semantics, without requiring Solid-specific discovery logic.
-            </dd>
-          </dl>
-        </div>
-      </section>
-
-      <section id="orthogonality" inlist="" rel="schema:hasPart" resource="#orthogonality" typeof="skos:ConceptScheme"><a class="self-link" href="#orthogonality"></a>
-        <h4 property="schema:name skos:prefLabel">Orthogonality</h4>
-        <div datatype="rdf:HTML" property="schema:description">
-          <p>This profile is designed to be orthogonal to other core Solid specifications:</p>
-          <dl>
-            <dt about="#orthogonality-access-control" property="skos:prefLabel" typeof="skos:Concept"><dfn id="orthogonality-access-control"><a class="self-link" href="#orthogonality-access-control"></a>Access Control</dfn></dt>
-            <dd about="#orthogonality-access-control" property="skos:definition">
-              This specification does not define custom access control logic. 
-              Instead, implementations are tested on their ability to enforce access control on catalog documents according to the Solid Protocol [[SOLID-PROTOCOL]]. 
-              Compliance is achieved when a standard Solid Server correctly issues authorized access or HTTP 401/403 responses for a <code>dcat:CatalogRecord</code> based on native Solid authorization checks, independent of the discovery traversal.
-            </dd>
-            <dt about="#orthogonality-discovery" property="skos:prefLabel" typeof="skos:Concept"><dfn id="orthogonality-discovery"><a class="self-link" href="#orthogonality-discovery"></a>Other Discovery Mechanisms</dfn></dt>
-            <dd about="#orthogonality-discovery" property="skos:definition">
-              This specification is orthogonal to existing discovery mechanisms, such as the Type Indexes [[TYPE-INDEXES]] specification or message-based discovery protocols like the Dataspace Protocol (DSP) Catalog Protocol [[DSP]]. 
-              Implementations can simultaneously support these mechanisms without conflict. 
-              For example, a lightweight class-based discovery approach using Type Indexes can be built on top of or operate alongside the rich conformance metadata provided by a <code>dcat:Dataset</code>, or a server could offer message-based queries by exposing the underlying DCAT metadata through a query interface alongside the RESTful interface. 
-              This allows the server to remain un-opinionated and enables clients to choose the discovery mechanism best suited to their needs.</dd>
-          </dl>
-        </div>
-      </section>
-
     </section>
 
   </section>
 
-    <section id="..." class="normative">
-    <h2>...</h2>
-    <p>
-      ...
-    </p>
+  <section id="conformance" class="normative">
+    <!-- ReSpec supplies the Conformance heading and BCP 14 keyword definitions. -->
+    <p>This section describes the <span about="" rel="spec:conformance" resource="#conformance">conformance model of the Solid DCAT Profile</span>.</p>
+
+    <section id="normative-informative-content" inlist="" rel="schema:hasPart" resource="#normative-informative-content"><a class="self-link" href="#normative-informative-content"></a>
+      <h3 property="schema:name">Normative and Informative Content</h3>
+      <div datatype="rdf:HTML" property="schema:description">
+        <p id="normative-informative-sections"><a class="self-link" href="#normative-informative-sections"></a>All diagrams, examples, and notes are non-normative, as are all sections explicitly marked non-normative. Everything else is normative.</p>
+      </div>
+    </section>
+
+    <section id="specification-category" inlist="" rel="schema:hasPart" resource="#specification-category" typeof="skos:ConceptScheme"><a class="self-link" href="#specification-category"></a>
+      <h3 property="schema:name skos:prefLabel">Specification Category</h3>
+      <div datatype="rdf:HTML" property="schema:description">
+        <p property="skos:definition">The <span about="" rel="spec:specificationCategory" resource="#specification-category">Solid DCAT Profile</span> identifies the following <cite><a href="https://www.w3.org/TR/spec-variability/#spec-cat" rel="dcterms:subject" resource="spec:SpecificationCategory">Specification Category</a></cite> to distinguish the types of conformance: <span rel="skos:hasTopConcept" resource="spec:NotationSyntax">notation/syntax</span>, <span rel="skos:hasTopConcept" resource="spec:ProcessorBehavior">processor behavior</span>, <span rel="skos:hasTopConcept" resource="spec:Protocol">protocol</span>.</p>
+      </div>
+    </section>
+
+    <section id="classes-of-products" inlist="" rel="schema:hasPart" resource="#classes-of-products" typeof="skos:ConceptScheme"><a class="self-link" href="#classes-of-products"></a>
+      <h3 property="schema:name skos:prefLabel">Classes of Products</h3>
+      <div datatype="rdf:HTML" property="schema:description">
+        <p property="skos:definition">The <span about="" rel="spec:classesOfProducts" resource="#classes-of-products">Solid DCAT Profile</span> identifies the following <cite><a href="https://www.w3.org/TR/qaframe-spec/#cop-def" rel="dcterms:subject" resource="spec:ClassesOfProducts">Classes of Products</a></cite> for conforming implementations.</p>
+
+        <dl rel="skos:hasTopConcept">
+          <dt about="#Catalog" property="skos:prefLabel" rel="skos:broadMatch" resource="spec:Content" typeof="skos:Concept"><dfn id="Catalog"><a class="self-link" href="#Catalog"></a>Data Catalog</dfn></dt>
+          <dd about="#Catalog" property="skos:definition">A collection of RDF documents representing the catalog structure, utilizing <code>dcat:Catalog</code>, <code>dcat:CatalogRecord</code>, <code>dcat:Dataset</code>, <code>dcat:DatasetSeries</code>, and <code>dcat:Distribution</code> to describe resources and containers.</dd>
+
+          <dt about="#Server" property="skos:prefLabel" rel="skos:broadMatch" resource="spec:RespondingAgent" typeof="skos:Concept"><dfn id="Server"><a class="self-link" href="#Server"></a>Storage Server</dfn></dt>
+          <dd about="#Server" property="skos:definition">A system responsible for hosting resources, containers, and the catalog records themselves, responding to HTTP requests, and exposing catalog links.</dd>
+
+          <dt about="#Client" property="skos:prefLabel" rel="skos:broadMatch" resource="spec:Consumer" typeof="skos:Concept"><dfn id="Client"><a class="self-link" href="#Client"></a>Discovery Client</dfn></dt>
+          <dd about="#Client" property="skos:definition">A software application that issues HTTP requests to discover the catalog via WebID profiles or server descriptions, and traverses <code>dcat:record</code> and <code>dcat:distribution</code> links to access data.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="interoperability" inlist="" rel="schema:hasPart" resource="#interoperability" typeof="skos:ConceptScheme"><a class="self-link" href="#interoperability"></a>
+      <h3 property="schema:name skos:prefLabel">Interoperability</h3>
+      <div datatype="rdf:HTML" property="schema:description">
+        <p>This profile establishes [=Client–Server Interoperability=] and [=Cross-Ecosystem Interoperability=].</p>
+        <dl>
+          <dt about="#client-server-interoperability" property="skos:prefLabel" typeof="skos:Concept"><dfn id="client-server-interoperability"><a class="self-link" href="#client-server-interoperability"></a>Client–Server Interoperability</dfn></dt>
+          <dd about="#client-server-interoperability" property="skos:definition">
+            Interoperability of implementations for Discovery Clients and Storage Servers is tested by evaluating an implementation's ability to request, respond to, and process HTTP messages containing DCAT and LDP vocabularies that conform to this specification.
+            Interoperability is achieved when a <a href="#Client">Discovery Client</a>, given a discovery entry point (such as an agent's WebID or a storage description), can successfully traverse the <code>dcat:record</code> and <code>dcat:distribution</code> links to obtain and validate the corresponding datasets from any conforming Storage Server.
+          </dd>
+
+          <dt about="#cross-ecosystem-interoperability" property="skos:prefLabel" typeof="skos:Concept"><dfn id="cross-ecosystem-interoperability"><a class="self-link" href="#cross-ecosystem-interoperability"></a>Cross-Ecosystem Interoperability</dfn></dt>
+          <dd about="#cross-ecosystem-interoperability" property="skos:definition">
+            Interoperability of implementations for Storage Servers and external Data Catalogs is tested by evaluating the ability of external, non-Solid clients to provide and consume exposed metadata.
+            Interoperability is achieved when a non-Solid, standard DCAT-compliant catalog or agent can successfully consume the <code>dcat:Catalog</code>, <code>dcat:Dataset</code>, and <code>dcat:Distribution</code> descriptions hosted on a conforming Storage Server using standard RDF and HTTP semantics, without requiring Solid-specific discovery logic.
+          </dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="orthogonality" inlist="" rel="schema:hasPart" resource="#orthogonality" typeof="skos:ConceptScheme"><a class="self-link" href="#orthogonality"></a>
+      <h3 property="schema:name skos:prefLabel">Orthogonality</h3>
+      <div datatype="rdf:HTML" property="schema:description">
+        <p>This profile is designed to be orthogonal to other core Solid specifications:</p>
+        <dl>
+          <dt about="#orthogonality-access-control" property="skos:prefLabel" typeof="skos:Concept"><dfn id="orthogonality-access-control"><a class="self-link" href="#orthogonality-access-control"></a>[=Access Control=]</dfn></dt>
+          <dd about="#orthogonality-access-control" property="skos:definition">
+            This specification does not define custom access control logic.
+            Instead, implementations are tested on their ability to enforce access control on catalog documents according to the Solid Protocol [[SOLID-PROTOCOL]].
+            Compliance is achieved when a standard Solid Server correctly issues authorized access or HTTP 401/403 responses for a <code>dcat:CatalogRecord</code> based on native Solid authorization checks, independent of the discovery traversal.
+          </dd>
+          <dt about="#orthogonality-discovery" property="skos:prefLabel" typeof="skos:Concept"><dfn id="orthogonality-discovery"><a class="self-link" href="#orthogonality-discovery"></a>[=Other Discovery Mechanisms=]</dfn></dt>
+          <dd about="#orthogonality-discovery" property="skos:definition">
+            This specification is orthogonal to existing discovery mechanisms, such as the Type Indexes [[TYPE-INDEXES]] specification or message-based discovery protocols like the Dataspace Protocol (DSP) Catalog Protocol [[DSP]].
+            Implementations can simultaneously support these mechanisms without conflict.
+            For example, a lightweight class-based discovery approach using Type Indexes can be built on top of or operate alongside the rich conformance metadata provided by a <code>dcat:Dataset</code>, or a server could offer message-based queries by exposing the underlying DCAT metadata through a query interface alongside the RESTful interface.
+            This allows the server to remain un-opinionated and enables clients to choose the discovery mechanism best suited to their needs.</dd>
+        </dl>
+      </div>
+    </section>
+
+  </section>
+
+  <section id="prefixes" class="normative">
+    <h2>Prefixes</h2>
+    <p>The following prefix declarations are used by the SHACL shapes and Turtle examples in this document.</p>
+    <pre class="turtle">
+    @prefix sdp: &lt;http://purl.org/sdp/terms#&gt; .
+    @prefix sh: &lt;http://www.w3.org/ns/shacl#&gt; .
+    @prefix dcat: &lt;http://www.w3.org/ns/dcat#&gt; .
+    @prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+    @prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+    @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .</pre>
+  </section>
+  <section id="data-model" class="normative">
+    <h2>Data Model</h2>
+    <p>The Data Catalog Vocabulary (DCAT) [[!DCAT]] provides standardized RDF terms for describing data catalogs in flexible ways. In some domains or in the context of specific applications, it is necessary or required to be more explicit about a data model's intended usage. The Solid DCAT Profile does exactly that. It adopts DCAT's data model in parts and states how Solid DCAT data catalogs are represented that augment Solid storages and curate their Solid-managed resources. In the following, we specify the added constraints on the data model as SHACL shapes [[!SHACL]].
+    This section describes the shapes that define how Solid DCAT data catalogs are represented.</p>
+    <section id="catalog-model">
+      <h3>Catalog</h3>
+      <p>A <code>dcat:Catalog</code> is a collection of metadata records describing Solid resources. Our profile data model defines the following requirements w.r.t. data catalogs:</p>
+      <ol>
+      <li>Resources linked via <code>dcat:record</code> MUST conform to the shape <code>sdp:CatalogRecordShape</code>.</li>
+      <li>Resources linked via <code>dcat:dataset</code> MUST conform to <code>sdp:DatasetShape</code>.</li>
+      <li>If the linked dataset is also of class <code>dcat:DatasetSeries</code>, it MUST conform to <code>sdp:DatasetSeriesShape</code>.</li>
+      </ol>
+      <pre class="turtle">
+      sdp:CatalogShape
+          a sh:NodeShape ;
+          sh:targetClass dcat:Catalog ;
+          sh:property [
+              sh:path dcat:record ;
+              sh:node sdp:CatalogRecordShape
+          ] ;
+          sh:property [
+              sh:path dcat:dataset ;
+              sh:node sdp:DatasetShape ;
+              sh:class dcat:Dataset ;
+              sh:or (
+                  [
+                      sh:not [ sh:class dcat:DatasetSeries ]
+                  ]
+                  [
+                      sh:node sdp:DatasetSeriesShape ;
+                      sh:class dcat:DatasetSeries
+                  ]
+              )
+          ] .</pre>
+    </section>
+    <section id="catalog-record-model">
+      <h3>Catalog Record</h3>
+      <p>A <a href="#catalog-record"><code>dcat:CatalogRecord</code></a> is a metadata document about a Solid resource. Our profile model defines the following requirements w.r.t. catalog records:</p>
+      <ol>
+      <li>A <code>dcat:CatalogRecord</code> document MUST link the targeted Solid resource that the document's metadata is about via <code>foaf:primaryTopic</code>.</li>
+      <li>A catalog record's primary topic MUST conform to <code>sdp:DatasetShape</code>.</li>
+      <li>If the primary topic is of class <code>dcat:DatasetSeries</code>, it MUST conform to <code>sdp:DatasetSeriesShape</code>.</li>
+      </ol>
+      <pre class="turtle">
+      sdp:CatalogRecordShape
+          a sh:NodeShape ;
+          sh:targetClass dcat:CatalogRecord ;
+          sh:property [
+              sh:path foaf:primaryTopic ;
+              sh:minCount 1 ;
+              sh:maxCount 1 ;
+              sh:node sdp:DatasetShape ;
+              sh:class dcat:Dataset ;
+              sh:or (
+                  [
+                      sh:not [ sh:class dcat:DatasetSeries ]
+                  ]
+                  [
+                      sh:node sdp:DatasetSeriesShape ;
+                      sh:class dcat:DatasetSeries
+                  ]
+              )
+          ] .</pre>
+    </section>
+    <section id="dataset-model">
+      <h3>Dataset</h3>
+      <p>A <a href="#dataset"><code>dcat:Dataset</code></a> is a collection of data, which comes in one or more representations that make the conceptual notion of a dataset accessible. Our profile model defines the following requirements w.r.t. datasets:</p>
+      <ol>
+      <li>A <code>dcat:Dataset</code> MUST link at least one accessible representation via <code>dcat:distribution</code> that conforms to <code>sdp:DistributionShape</code>.</li>
+      <li>A <code>dcat:Dataset</code> SHOULD link a theme via <code>dcat:theme</code> to state the dataset's main category.</li>
+      <li>Resources linked via <code>dcat:inSeries</code> MUST conform to the shape <code>sdp:DatasetSeriesShape</code>.</li>
+      </ol>
+      <pre class="turtle">
+      sdp:DatasetShape
+          a sh:NodeShape ;
+          sh:targetClass dcat:Dataset ;
+          sh:property [
+              sh:path dcat:distribution ;
+              sh:node sdp:DistributionShape ;
+              sh:minCount 1
+          ] ;
+          sh:property [
+              sh:path dcat:theme ;
+              sh:minCount 1
+          ] ;
+          sh:property [
+              sh:path dcat:inSeries ;
+              sh:node sdp:DatasetSeriesShape
+          ] .</pre>
+    </section>
+    <section id="dataset-series-model">
+      <h3>Dataset Series</h3>
+      <p>A <a href="#dataset-series"><code>dcat:DatasetSeries</code></a> is a dataset which represents a collection of datasets that are published separately, but share some characteristics that group them. Our profile model defines the following requirements w.r.t. dataset series:</p>
+      <ol>
+      <li>As each instance of <code>dcat:DatasetSeries</code> is an instance of <code>dcat:Dataset</code>, a dataset series MUST conform to the shape <code>sdp:DatasetShape</code>.</li>
+      <li>Resources linked via <code>dcat:seriesMember</code> MUST conform to <code>sdp:DatasetShape</code>.</li>
+      <li>If a linked resource is of class <code>dcat:DatasetSeries</code>, it MUST conform to <code>sdp:DatasetSeriesShape</code>.</li>
+      </ol>
+      <pre class="turtle">
+      sdp:DatasetSeriesShape
+          a sh:NodeShape ;
+          sh:targetClass dcat:DatasetSeries ;
+          sh:node sdp:DatasetShape ;
+          sh:property [
+              sh:path dcat:seriesMember ;
+              sh:node sdp:DatasetShape ;
+              sh:class dcat:Dataset ;
+              sh:or (
+                  [
+                      sh:not [ sh:class dcat:DatasetSeries ]
+                  ]
+                  [
+                      sh:node sdp:DatasetSeriesShape ;
+                      sh:class dcat:DatasetSeries
+                  ]
+              )
+          ] .</pre>
+    </section>
+    <section id="distribution-model">
+      <h3>Distribution</h3>
+      <p>A <a href="#distribution"><code>dcat:Distribution</code></a> is an accessible form of a dataset such as a downloadable file. Our profile model defines the following requirements w.r.t. distributions:</p>
+      <ol>
+      <li>A distribution MUST link one downloadable file via <code>dcat:downloadURL</code>.</li>
+      <li>A distribution MUST link one media type via <code>dcat:mediaType</code>.</li>
+      <li>A distribution MUST indicate at least one model, schema, ontology, view or profile that this representation of a dataset conforms to via <code>dcterms:conformsTo</code>.</li>
+      </ol>
+      <pre class="turtle">
+      sdp:DistributionShape
+          a sh:NodeShape ;
+          sh:targetClass dcat:Distribution ;
+          sh:property [
+              sh:path dcat:downloadURL ;
+              sh:nodeKind sh:IRI ;
+              sh:minCount 1 ;
+              sh:maxCount 1
+          ] ;
+          sh:property [
+              sh:path dcat:mediaType ;
+              sh:minCount 1 ;
+              sh:maxCount 1
+          ] ;
+          sh:property [
+              sh:path dcterms:conformsTo ;
+              sh:minCount 1
+          ] .</pre>
+    </section>
+  </section>
+  <section id="catalog-management-model" class="normative">
+    <h2>Catalog Management Model</h2>
+    <p>This section describes the catalog's behaviour and how cataloged resources are managed.</p>
+    <section id="hosting-a-solid-dcat-catalog">
+      <h3>Hosting a Solid DCAT Catalog</h3>
+      <p>A Solid DCAT data catalog is a collection of two types of documents: (1) One root catalog document, and (2) several catalog record documents.</p>
+      <p>A root catalog document MUST conform to the shape <code>sdp:CatalogShape</code>.</p>
+      <p>A catalog record document MUST conform to the shape <code>sdp:CatalogRecordShape</code>.</p>
+      <p>These two types of documents are Solid-managed information resources:</p>
+      <ul>
+      <li>The behaviour of a data catalog root document MUST correspond to a Linked Data Platform RDF Source (LDP-RS).</li>
+      <li>The behaviour of a catalog record document MUST correspond to a Linked Data Platform RDF Source (LDP-RS).</li>
+      </ul>
+      <p>The root data catalog document and all its referenced catalog record documents MAY be managed by the same Solid storage server. Nevertheless, federated deployment scenarios are also possible, where the documents are distributed across various Solid storage servers.</p>
+    </section>
+    <section id="adding-a-resource-to-a-catalog">
+      <h3>Adding a Resource to a Catalog</h3>
+      <p>There is a 1-1 correspondence between Solid DCAT catalog record documents and information resources managed by a Solid storage server.</p>
+      <p>When a Solid-managed resource is added to a Solid DCAT data catalog, there MUST exist one catalog record that conforms to the shape <code>sdp:CatalogRecordShape</code> and that links to the Solid-managed resource.</p>
+      <p>Clients can add a new Solid-managed resource to a Solid DCAT data catalog by performing the following operations:</p>
+      <ol>
+      <li>
+      <p>Creating a corresponding catalog record:</p>
+      <p>A catalog record MUST be created on a Solid storage server.</p>
+      <p>When the resource is a <a href="#container-resource"><code>ldp:Container</code></a>, an instance of type <code>dcat:DatasetSeries</code> MUST be created as a secondary resource to the primary catalog record. The catalog record MUST reference the dataset series via <code>foaf:primaryTopic</code>.</p>
+      <p>When the resource is <em>not</em> a <code>ldp:Container</code>, an instance of type <code>dcat:Dataset</code> MUST be created as a secondary resource to the primary catalog record resource. The catalog record MUST reference the dataset via <code>foaf:primaryTopic</code>.</p>
+      <p>An instance of type <code>dcat:Distribution</code> MUST be created as a secondary resource to the primary catalog record resource and an additional fragment identifier component.</p>
+      <p>The created dataset or dataset series MUST link the created distribution via <code>dcat:distribution</code>.</p>
+      <p>The created distribution MUST link the Solid-managed resource via <code>dcat:downloadURL</code>.</p>
+      <p>The predicates <code>dcat:inSeries</code> and <code>dcat:seriesMember</code> can be used to represent the containment relations between Solid-managed resources stated by <code>ldp:contains</code> and their inverse.</p>
+      </li>
+      <li>
+      <p>Linking the new catalog record</p>
+      <p>The new catalog record MUST be linked by the root catalog document via <code>dcat:record</code>.</p>
+      </li>
+      </ol>
+      <p>A client performs step 1 by a HTTP <code>POST</code> request to a URI path ending with <code>/</code> as defined in the Solid Protocol [[!SOLID-PROTOCOL]] (§5.3).</p>
+      <p>A client performs step 2 by a HTTP <code>PATCH</code> request to the root catalog document as defined in the Solid Protocol [[!SOLID-PROTOCOL]] (§5.3.1).</p>
+    </section>
+    <section id="reading-a-catalog-resource">
+      <h3>Reading a Catalog Resource</h3>
+      <p>Clients can retrieve a representation of a resource's state using HTTP <code>GET</code>, <code>HEAD</code> and <code>OPTIONS</code>, as defined in the Solid Protocol [[!SOLID-PROTOCOL]] (§5.2).</p>
+    </section>
+    <section id="updating-a-catalog-resource">
+      <h3>Updating a Catalog Resource</h3>
+      <p>Clients can modify Solid DCAT catalog resources using N3 patches as defined in the Solid Protocol [[!SOLID-PROTOCOL]] (§5.3.1).</p>
+    </section>
+    <section id="removing-a-catalog-resource">
+      <h3>Removing a Catalog Resource</h3>
+      <p>Clients can remove Solid-managed resources from the catalog by performing the following operations:</p>
+      <ol>
+      <li>IF the corresponding catalog record contains a triple with predicate <code>dcat:inSeries</code>, remove the triple that links to the record via <code>dcat:seriesMember</code> from the mentioned dataset series by sending a HTTP <code>PATCH</code> request to the series IRI as defined in the Solid Protocol [[!SOLID-PROTOCOL]] (§5.3.1).</li>
+      <li>Remove the catalog record itself by sending a HTTP <code>DELETE</code> request to the record IRI as defined in the Solid Protocol [[!SOLID-PROTOCOL]] (§5.4).</li>
+      <li>Remove the triple that links the data catalog and the deleted catalog record via <code>dcat:record</code> by sending a HTTP <code>PATCH</code> request to the catalog IRI.</li>
+      </ol>
+      <p>Clients are responsible for managing the containment hierarchy of datasets such as preventing dangling datasets. This may happen through removing the catalog record of a dataset series, before handling potential series members which are linked via <code>dcat:seriesMember</code>.</p>
+    </section>
+    <section id="discovery-mechanisms">
+      <h3>Discovery mechanisms</h3>
+      <p>The Solid DCAT Profile follows the Linked Data Principles and the RESTful architecture-style of the Web. A Solid DCAT data catalog serves as a common entry point for conducting discovery procedures and thus can be referenced by other resources.</p>
+      <section id="discovering-the-catalog">
+        <h4>Discovering the catalog</h4>
+        <p>A Solid DCAT data catalog can be discovered via the <code>sdp:catalog</code> predicate:</p>
+        <ol>
+        <li>The Solid storage server that hosts data recorded by the catalog can reference the catalog in the server's description resource (cf. Solid Protocol [[!SOLID-PROTOCOL]] §4.3.2).</li>
+        <li>An agent's WebID profile document can reference a catalog which curates datasets offered by the agent.</li>
+        </ol>
+      </section>
+      <section id="discovering-catalog-resources">
+        <h4>Discovering catalog resources</h4>
+        <p>After discovering the catalog itself, the process of discovering datasets is composed of interacting with the resources defined in the profile's data model.</p>
+        <p>A client can follow a <code>dcat:record</code> link to discover a catalog record containing metadata information about a Solid-managed resource.</p>
+        <p>A client can follow a <code>dcat:dataset</code> link to directly discover the dataset augmenting a Solid-managed resource.</p>
+        <figure id="discovery-sequence">
+          <img src="diagrams/flow.svg" alt="Sequence diagram for discovering catalogs and datasets by following links from a WebID." />
+          <figcaption>Discovery sequence for catalogs and datasets.</figcaption>
+        </figure>
+      </section>
+    </section>
+    <section id="controlling-access-to-a-catalog-record">
+      <h3>Controlling access to a catalog record</h3>
+      <p>Catalog records are stored on Solid storages and are separated from their corresponding primary resources by design.</p>
+      <p>Clients can manage the access of catalog record resources and their Solid-managed primary counterparts individually.</p>
+      <p>Clients are encouraged to make use of Web Access Control (WAC) to restrict access to catalog documents (cf. Solid Protocol [[!SOLID-PROTOCOL]] §11).</p>
+    </section>
+  </section>
+  <section id="example" class="informative">
+    <h2>Example</h2>
+    <p>Assume the storage <code>&lt;http://ex.org/s/&gt;</code> on a <a href="#Server">Storage Server</a> that stores one container which contains one document:</p>
+    <pre class="turtle example">
+    @prefix ldp: &lt;http://www.w3.org/ns/ldp#&gt; .
+    @prefix pim: &lt;http://www.w3.org/ns/pim/space#&gt; .
+    @base &lt;http://ex.org/s/&gt; .
+
+    &lt;&gt;
+        a pim:Storage ;
+        ldp:contains &lt;c/&gt; .</pre>
+    <pre class="turtle example">
+    @prefix ldp: &lt;http://www.w3.org/ns/ldp#&gt; .
+    @base &lt;http://ex.org/s/c/&gt; .
+
+    &lt;&gt;
+        a ldp:Container ;
+        ldp:contains &lt;1&gt; .</pre>
+    <p>The following example shows the state of all resources on the <a href="#Server">Storage Server</a> when the <a href="#Catalog">Data Catalog</a> itself is hosted on the same <a href="#Server">Storage Server</a> and each <a href="#resource">Solid resource</a> was recorded in the <a href="#Catalog">Data Catalog</a>. The <a href="#Catalog">Data Catalog</a> document's location on the <a href="#Server">Storage Server</a> is up to the implementor's choice. For this example, the location <code>&lt;http://ex.org/s/cat/alog&gt;</code> was chosen:</p>
+    <pre class="turtle example">
+    @prefix ldp: &lt;http://www.w3.org/ns/ldp#&gt; .
+    @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+    @base &lt;http://ex.org/s/c/1&gt; .
+
+    &lt;&gt;
+        a ldp:Resource .
+
+    &lt;#lukas&gt;
+        a foaf:Person ;
+        foaf:firstName "Lukas" .</pre>
+    <pre class="turtle example">
+    @prefix dcat: &lt;http://www.w3.org/ns/dcat#&gt; .
+    @base &lt;http://ex.org/s/cat/alog&gt; .
+
+    &lt;#it&gt;
+        a dcat:Catalog ;
+        dcat:record &lt;r1&gt;, &lt;r2&gt; .</pre>
+    <pre class="turtle example">
+    @prefix dcat: &lt;http://www.w3.org/ns/dcat#&gt; .
+    @prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+    @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+    @base &lt;http://ex.org/s/cat/r1&gt; .
+
+    &lt;&gt;
+        a dcat:CatalogRecord ;
+        foaf:primaryTopic &lt;#ds&gt; .
+
+    &lt;#ds&gt;
+        a dcat:DatasetSeries ;
+        dcat:theme &lt;http://ex.org/themes#someTheme&gt; ;
+        dcat:distribution &lt;#dist1&gt; ;
+        dcat:seriesMember &lt;r2#ds&gt; .
+
+    &lt;#dist1&gt;
+        a dcat:Distribution ;
+        dcat:downloadURL &lt;../c/&gt; ;
+        dcat:mediaType &lt;https://www.iana.org/assignments/media-types/text/turtle&gt; ;
+        dcterms:conformsTo &lt;http://www.w3.org/ns/ldp#BasicContainer&gt; .</pre>
+    <pre class="turtle example">
+    @prefix dcat: &lt;http://www.w3.org/ns/dcat#&gt; .
+    @prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+    @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+    @base &lt;http://ex.org/s/cat/r2&gt; .
+
+    &lt;&gt;
+        a dcat:CatalogRecord ;
+        foaf:primaryTopic &lt;#ds&gt; .
+
+    &lt;#ds&gt;
+        a dcat:Dataset ;
+        dcat:theme &lt;http://ex.org/themes#someOtherTheme&gt; ;
+        dcat:distribution &lt;#dist1&gt; ;
+        dcat:inSeries &lt;r1#ds&gt; .
+
+    &lt;#dist1&gt;
+        a dcat:Distribution ;
+        dcat:downloadURL &lt;../c/1&gt; ;
+        dcat:mediaType &lt;https://www.iana.org/assignments/media-types/text/turtle&gt; ;
+        dcterms:conformsTo &lt;http://www.w3.org/ns/ldp#Resource&gt; ;
+        dcterms:conformsTo &lt;../shapes/someShape.ttl&gt; .</pre>
   </section>
 
   <section id="security-considerations" class="informative">
     <h2>Security Considerations</h2>
     <p>
-      By defining catalog records (<code>dcat:CatalogRecord</code>) as standard Linked Data Platform Resources managed on the server, this profile ensures that standard Web Access Control (WAC) or Access Control Policies (ACP) apply. This allows administrators to manage access control for discovery metadata using the same mechanisms applied to other resources in the Solid ecosystem.
+      Catalog records are Solid-managed Linked Data Platform RDF Sources (LDP-RS). Clients are encouraged to use Web Access Control (WAC) to restrict access to catalog documents, as described in <a href="#controlling-access-to-a-catalog-record"></a>.
     </p>
   </section>
 
@@ -270,4 +594,4 @@
   </section>
 </body>
 
-</html>https://dbis.rwth-aachen.de/SDS26/
+</html>
