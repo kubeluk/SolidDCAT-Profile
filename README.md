@@ -16,6 +16,4 @@ Practical flow of discovering catalogs and datasets. After discovering the catal
 
 ## Demo
 
-A reference implementation can be found [here](https://github.com/hoelk-f/semantic-data-catalog). The screencast shows its functionality.
-
-<video src="demo/solid-dcat-profile-screencast.mp4" controls="controls"></video>
+A reference implementation can be found [here](https://github.com/hoelk-f/semantic-data-catalog). The [screencast](demo/solid-dcat-profile-screencast.mp4) shows its functionality.
