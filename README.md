@@ -13,3 +13,9 @@ High-level overview of the profile model. The lower part of the figure shows how
 Practical flow of discovering catalogs and datasets. After discovering the catalog via an agent’s WebID (directly or indirectly), its records are traversed, and (meta)data is collected.
 
 ![Practical Flow](diagrams/flow.svg)
+
+## Demo
+
+A reference implementation can be found [here](https://github.com/hoelk-f/semantic-data-catalog). The screencast shows its functionality.
+
+<video src="demo/solid-dcat-profile-screencast.mp4" controls="controls"></video>
